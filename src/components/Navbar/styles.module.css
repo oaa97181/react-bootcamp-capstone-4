@@ -10,7 +10,7 @@
     z-index: 20;
 }
 
-.nav-container {
+.navContainer {
     display: flex;
     align-items: center;
     width: 100%;
@@ -23,20 +23,20 @@
 }
 
 
-.search-container{
+.searchContainer{
   position: relative;
 }
 input{
   padding-left: 25px;
 }
-.search-icon{
+.searchIcon{
   position: absolute;
   left: 3px;
   top: calc(60%);
 }
 
 @media (max-width: 750px) {
-    .logo-container {
+    .logoContainer {
         display: none;
     }
 

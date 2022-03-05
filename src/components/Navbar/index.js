@@ -1,23 +1,23 @@
-import "./Navbar.css";
+import styles from  "./styles.module.css";
 
 function Navbar() {
     return (
         <>
-            <nav className="navbar">
-                <div className="nav-container">
+            <nav className={styles.navbar}>
+                <div className={styles.navContainer}>
 
-                    <div className="logo-container">
-                        <i className="fa fa-dumpster-fire iconsMargin"/>
+                    <div className={styles.logoContainer}>
+                        <i className={`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
                         React Shop
-                        <i className="fa fa-dumpster-fire iconsMargin"/>
+                        <i className= {`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
                     </div>
 
-                    <div className="search-container">
+                    <div className={styles.searchContainer}>
                         <input/>
-                        <label className="fa fa-magnifying-glass fa-sm search-icon"/>
+                        <label className={`fa fa-magnifying-glass fa-sm ${styles.searchIcon}`}/>
                     </div>
 
-                    <i className="fa fa-shopping-cart iconsMargin"/>
+                    <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
 
                 </div>
             </nav>
