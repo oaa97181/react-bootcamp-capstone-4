@@ -1,5 +1,6 @@
 import {useFeaturedBanners} from './utils/hooks/useFeaturedBanners';
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
     const {data, isLoading} = useFeaturedBanners();
@@ -8,6 +9,7 @@ function App() {
     return (
         <>
             <Navbar/>
+            <Footer/>
         </>
     );
 }
