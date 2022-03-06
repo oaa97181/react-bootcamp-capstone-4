@@ -6,7 +6,7 @@ function Navbar() {
             <nav className={styles.navbar}>
                 <div className={styles.navContainer}>
 
-                    <div className={styles.logoContainer}>
+                    <div>
                         <i className={`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
                         React Shop
                         <i className= {`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
