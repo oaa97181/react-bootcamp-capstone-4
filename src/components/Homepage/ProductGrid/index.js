@@ -1,10 +1,9 @@
 import styles from "./styles.module.css";
 
 function ProductGrid({data}) {
-    console.log(data)
     return (
         <>
-            {}
+            featured products
         </>
     );
 }
