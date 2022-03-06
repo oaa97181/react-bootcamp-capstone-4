@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-import ProductCard from "../../ReusableComponents/ProductCard";
+import ProductCard from "../ProductCard";
 
 function ProductGrid({data}) {
 
@@ -11,7 +11,7 @@ function ProductGrid({data}) {
                 </div>
                 {data.results.map((product) => {
                     return (
-                        <ProductCard product={product}/>
+                        <ProductCard product={product} key={product.id}/>
                     )
                 })}
             </div>
