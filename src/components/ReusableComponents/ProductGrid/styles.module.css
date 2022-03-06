@@ -1,0 +1,13 @@
+.productGridContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 20px 20px 10vh;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+}

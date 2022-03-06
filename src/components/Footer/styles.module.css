@@ -1,0 +1,13 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    background-color: #a5b9bb;
+    text-align: left;
+}
+
+.footer > div{
+    margin: 1em;
+}
