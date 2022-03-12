@@ -5,15 +5,15 @@ import {PageContext} from "../../../contexts/pageContext";
 import {useContext} from "react";
 
 
-function ProductGrid({data}) {
-      const [ state, dispatch ] = useContext(PageContext)
+function ProductGrid({data, title}) {
+    const [state, dispatch] = useContext(PageContext)
 
 
     return (
         <>
             <div className={styles.productGridContainer}>
                 <div className={styles.subtitle}>
-                    <h2>featured products</h2>
+                    <h2>{title}</h2>
                 </div>
                 {data.results.map((product) => {
                     return (
@@ -22,8 +22,13 @@ function ProductGrid({data}) {
                 })}
             </div>
             <div className={styles.buttonContainer}>
-                {/* eslint-disable-next-line max-len */}
-                <button onClick={() => dispatch({ type: "productList" })}>View all products</button>
+                {state.page === 'home' ?
+                    <button onClick={() => dispatch({type: "productList"})}>View all
+                        products</button>
+                    :
+                    <button onClick={() => dispatch({type: "home"})}>Return to homescreen</button>
+                }
+
             </div>
         </>
     );
@@ -31,6 +36,7 @@ function ProductGrid({data}) {
 
 ProductGrid.propTypes = {
     data: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
 };
 
 export default ProductGrid;

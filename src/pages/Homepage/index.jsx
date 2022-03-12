@@ -11,7 +11,7 @@ function Homepage() {
         <>
             <Slider data={featuredBanners}/>
             <CategoryGrid data={productCategories}/>
-            <ProductGrid data={featuredProducts}/>
+            <ProductGrid data={featuredProducts} title='Featured Products'/>
         </>
     );
 }

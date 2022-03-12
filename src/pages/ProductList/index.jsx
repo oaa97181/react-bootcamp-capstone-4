@@ -1,15 +1,15 @@
-import {useContext} from "react";
-import {PageContext} from "../../contexts/pageContext";
+import ProductGrid from "../../components/ReusableComponents/ProductGrid";
+import products from '../../data/mocks/en-us/products.json'
+import Sidebar from "../../components/Sidebar";
+
 
 function ProductList() {
-          const [ state, dispatch ] = useContext(PageContext)
 
     return (
         <>
+            <Sidebar/>
             <h1>This is the Product List Page</h1>
-            <div>
-                <button  onClick={() => dispatch({ type: "home" })}>View all products</button>
-            </div>
+            <ProductGrid data={products} title='All Products'/>
         </>
     );
 }
