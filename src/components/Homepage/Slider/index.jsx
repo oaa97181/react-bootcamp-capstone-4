@@ -1,31 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import SliderContent from "./SliderContent";
 import Dots from "./Dots";
 import Arrows from "./Arrows";
 import "./slider.css";
+import PropTypes from "prop-types";
 
 function Slider({data}) {
 
-    const len = data.results.length - 1;
+    const length = data.results.length - 1;
 
     const [activeIndex, setActiveIndex] = useState(0);
 
+    const nextSlide = useCallback(
+        () => {
+            return setActiveIndex(activeIndex === length ? 0 : activeIndex + 1)
+        },
+        [activeIndex, length]);
+
     useEffect(() => {
         const interval = setInterval(() => {
-            setActiveIndex(activeIndex === len ? 0 : activeIndex + 1);
+            nextSlide()
         }, 5000);
         return () => clearInterval(interval);
-    }, [activeIndex, len]);
+    }, [activeIndex, length, nextSlide]);
 
     return (
         <div className="slider-container">
-            <SliderContent activeIndex={activeIndex} sliderImage={data.results}/>
+            <SliderContent activeIndex={activeIndex} sliderImages={data.results}/>
             <Arrows
                 prevSlide={() =>
-                    setActiveIndex(activeIndex < 1 ? len : activeIndex - 1)
+                    setActiveIndex(activeIndex < 1 ? length : activeIndex - 1)
                 }
                 nextSlide={() =>
-                    setActiveIndex(activeIndex === len ? 0 : activeIndex + 1)
+                    nextSlide()
                 }
             />
             <Dots
@@ -36,5 +43,9 @@ function Slider({data}) {
         </div>
     );
 }
+
+Slider.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export default Slider;

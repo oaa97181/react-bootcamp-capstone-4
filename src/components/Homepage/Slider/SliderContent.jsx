@@ -1,7 +1,9 @@
-function SliderContent({activeIndex, sliderImage}) {
+import PropTypes from "prop-types";
+
+function SliderContent({activeIndex, sliderImages}) {
     return (
         <section>
-            {sliderImage.map((slide, index) => (
+            {sliderImages.map((slide, index) => (
                 <div
                     key={index}
                     className={index === activeIndex ? "slides active" : "inactive"}
@@ -14,5 +16,12 @@ function SliderContent({activeIndex, sliderImage}) {
         </section>
     );
 }
+
+
+SliderContent.propTypes = {
+    activeIndex: PropTypes.number.isRequired,
+    sliderImages: PropTypes.array.isRequired,
+};
+
 
 export default SliderContent;
