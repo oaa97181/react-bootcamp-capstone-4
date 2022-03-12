@@ -3,6 +3,7 @@ import SliderContent from "./SliderContent";
 import Dots from "./Dots";
 import Arrows from "./Arrows";
 import "./slider.css";
+import PropTypes from "prop-types";
 
 function Slider({data}) {
 
@@ -40,5 +41,9 @@ function Slider({data}) {
         </div>
     );
 }
+
+Slider.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export default Slider;
