@@ -1,9 +1,13 @@
 import styles from "./styles.module.css";
 import ProductCard from "../ProductCard";
 import PropTypes from "prop-types";
+import {PageContext} from "../../../contexts/pageContext";
+import {useContext} from "react";
 
 
 function ProductGrid({data}) {
+      const [ state, dispatch ] = useContext(PageContext)
+
 
     return (
         <>
@@ -18,7 +22,8 @@ function ProductGrid({data}) {
                 })}
             </div>
             <div className={styles.buttonContainer}>
-                <button>View all products</button>
+                {/* eslint-disable-next-line max-len */}
+                <button onClick={() => dispatch({ type: "productList" })}>View all products</button>
             </div>
         </>
     );
