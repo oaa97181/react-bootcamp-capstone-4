@@ -18,5 +18,5 @@ export const PageProvider = ({ children }) => {
 }
 
 PageProvider.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.array,
 };
