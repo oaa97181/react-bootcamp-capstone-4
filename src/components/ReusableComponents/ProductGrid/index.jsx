@@ -17,6 +17,9 @@ function ProductGrid({data}) {
                     )
                 })}
             </div>
+            <div className={styles.buttonContainer}>
+                <button>View all products</button>
+            </div>
         </>
     );
 }
