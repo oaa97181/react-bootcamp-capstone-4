@@ -1,5 +1,7 @@
 import styles from "./styles.module.css";
 import ProductCard from "../ProductCard";
+import PropTypes from "prop-types";
+
 
 function ProductGrid({data}) {
 
@@ -18,5 +20,9 @@ function ProductGrid({data}) {
         </>
     );
 }
+
+ProductGrid.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export default ProductGrid;

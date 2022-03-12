@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function Dots({activeIndex, onclick, sliderImage}) {
     return (
         <div className="all-dots">
@@ -11,5 +13,11 @@ function Dots({activeIndex, onclick, sliderImage}) {
         </div>
     );
 }
+
+Dots.propTypes = {
+    activeIndex: PropTypes.number.isRequired,
+    onclick: PropTypes.func.isRequired,
+    sliderImage: PropTypes.array.isRequired,
+};
 
 export default Dots;

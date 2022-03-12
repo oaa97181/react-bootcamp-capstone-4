@@ -1,4 +1,5 @@
 import styles from "./styles.module.css";
+import PropTypes from "prop-types";
 
 function CategoryGrid({data}) {
 
@@ -20,5 +21,9 @@ function CategoryGrid({data}) {
         </>
     );
 }
+
+CategoryGrid.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export default CategoryGrid;

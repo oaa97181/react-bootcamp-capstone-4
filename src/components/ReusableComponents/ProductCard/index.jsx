@@ -1,4 +1,6 @@
 import styles from "./styles.module.css";
+import PropTypes from "prop-types";
+
 
 function ProductCard({product}) {
 
@@ -19,5 +21,9 @@ function ProductCard({product}) {
         </div>
     );
 }
+
+ProductCard.propTypes = {
+    product: PropTypes.object.isRequired,
+};
 
 export default ProductCard;
