@@ -2,15 +2,19 @@ import ProductGrid from "../../components/ReusableComponents/ProductGrid";
 import Sidebar from "../../components/Sidebar";
 import products from '../../data/mocks/en-us/products.json'
 import productCategories from '../../data/mocks/en-us/product-categories.json'
+import {useState} from "react";
 
 
 function ProductList() {
 
+    const [categoryArray, setCategoryArray] = useState([]);
+
     return (
         <>
-            <Sidebar productCategories={productCategories}/>
-            <h1>This is the Product List Page</h1>
-            <ProductGrid products={products} title='All Products'/>
+            {/* eslint-disable-next-line max-len */}
+            <Sidebar productCategories={productCategories} categoryArray={categoryArray}
+                     setCategoryArray={setCategoryArray}/>
+            <ProductGrid products={products} title='All Products' categoryArray={categoryArray}/>
         </>
     );
 }
