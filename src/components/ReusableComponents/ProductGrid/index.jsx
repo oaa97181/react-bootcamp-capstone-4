@@ -5,7 +5,7 @@ import {PageContext} from "../../../contexts/pageContext";
 import {useContext} from "react";
 
 
-function ProductGrid({data, title}) {
+function ProductGrid({products, title}) {
     const [state, dispatch] = useContext(PageContext)
 
 
@@ -15,7 +15,7 @@ function ProductGrid({data, title}) {
                 <div className={styles.subtitle}>
                     <h2>{title}</h2>
                 </div>
-                {data.results.map((product) => {
+                {products.results.map((product) => {
                     return (
                         <ProductCard product={product} key={product.id}/>
                     )
@@ -35,7 +35,7 @@ function ProductGrid({data, title}) {
 }
 
 ProductGrid.propTypes = {
-    data: PropTypes.object.isRequired,
+    products: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
 };
 

@@ -1,15 +1,16 @@
 import ProductGrid from "../../components/ReusableComponents/ProductGrid";
-import products from '../../data/mocks/en-us/products.json'
 import Sidebar from "../../components/Sidebar";
+import products from '../../data/mocks/en-us/products.json'
+import productCategories from '../../data/mocks/en-us/product-categories.json'
 
 
 function ProductList() {
 
     return (
         <>
-            <Sidebar/>
+            <Sidebar productCategories={productCategories}/>
             <h1>This is the Product List Page</h1>
-            <ProductGrid data={products} title='All Products'/>
+            <ProductGrid products={products} title='All Products'/>
         </>
     );
 }
