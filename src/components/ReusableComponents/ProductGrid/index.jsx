@@ -27,7 +27,9 @@ function ProductGrid({products, title, categoryArray}) {
         })
 
         // eslint-disable-next-line max-len
-        return productCardsArray.every(v => v === false) ? <div className={styles.noProdcuts}> No products found for selected categories 😭 </div> : productCardsArray
+        return productCardsArray.every(v => v === false) ?
+            <div className={styles.noProdcuts}> No products found for selected categories
+                😭 </div> : productCardsArray
     }
 
     return (
@@ -47,6 +49,18 @@ function ProductGrid({products, title, categoryArray}) {
                 }
 
             </div>
+            {state.page === 'productList' &&
+                <div className={styles.paginationController}>
+                    <div className={styles.paginationElement}>
+                        <i className={`fa fa-arrow-left`}/>
+                        Previous Page
+                    </div>
+                    <div className={styles.paginationElement}>
+                        <i className={`fa fa-arrow-right`}/>
+                        Next Page
+                    </div>
+                </div>
+            }
         </>
     );
 }

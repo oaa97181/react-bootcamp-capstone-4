@@ -44,3 +44,16 @@
     font-size: 25px;
     text-align: center;
 }
+
+.paginationController {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 0 15vh;
+}
+
+.paginationElement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
