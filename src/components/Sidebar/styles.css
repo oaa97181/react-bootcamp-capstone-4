@@ -1,0 +1,25 @@
+.sidebar-button {
+    border: none;
+    padding: 8px 16px;
+    background-color: inherit;
+    cursor: pointer !important;
+}
+
+.close-button {
+        background-color: inherit;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 16px;
+    text-align: left;
+    border: none;
+    font-size: 18px !important;
+}
+
+.sidebar-container {
+    display: none;
+    border-right: 1px solid #ccc !important;
+    height: 100%;
+    width: 200px;
+    background-color: #fff;
+    position: fixed !important;
+}
