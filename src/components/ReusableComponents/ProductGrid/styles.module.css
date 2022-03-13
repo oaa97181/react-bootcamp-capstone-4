@@ -34,7 +34,13 @@
     transition: all .2s ease-in-out;
 }
 
-.buttonContainer > button:hover{
+.buttonContainer > button:hover {
     background-color: #97a9aa;
     transform: scale(1.1);
+}
+
+.noProdcuts {
+    padding: 100px;
+    font-size: 25px;
+    text-align: center;
 }

@@ -26,8 +26,8 @@ function ProductGrid({products, title, categoryArray}) {
             }
         })
 
-                    //TODO add styles
-        return productCardsArray.every(v => v === false) ? <>123 </> : productCardsArray
+        // eslint-disable-next-line max-len
+        return productCardsArray.every(v => v === false) ? <div className={styles.noProdcuts}> No products found for selected categories 😭 </div> : productCardsArray
     }
 
     return (
