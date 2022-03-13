@@ -5,9 +5,30 @@ import {PageContext} from "../../../contexts/pageContext";
 import {useContext} from "react";
 
 
-function ProductGrid({products, title}) {
+function ProductGrid({products, title, categoryArray}) {
     const [state, dispatch] = useContext(PageContext)
 
+    function renderProductCards() {
+        let productCardsArray = products.results.map((product) => {
+            if (categoryArray) {
+                if (categoryArray.length === 0) {
+                    //return all since no category is selected
+                    return <ProductCard product={product} key={product.id}/>
+                } else {
+                    //filter by category
+                    // eslint-disable-next-line max-len
+                    return categoryArray.includes(product.data.category.slug) &&
+                        <ProductCard product={product} key={product.id}/>
+                }
+            } else {
+                //return all, without category filters
+                return <ProductCard product={product} key={product.id}/>
+            }
+        })
+
+                    //TODO add styles
+        return productCardsArray.every(v => v === false) ? <>123 </> : productCardsArray
+    }
 
     return (
         <>
@@ -15,11 +36,7 @@ function ProductGrid({products, title}) {
                 <div className={styles.subtitle}>
                     <h2>{title}</h2>
                 </div>
-                {products.results.map((product) => {
-                    return (
-                        <ProductCard product={product} key={product.id}/>
-                    )
-                })}
+                {renderProductCards()}
             </div>
             <div className={styles.buttonContainer}>
                 {state.page === 'home' ?
@@ -37,6 +54,7 @@ function ProductGrid({products, title}) {
 ProductGrid.propTypes = {
     products: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
+    categoryArray: PropTypes.array,
 };
 
 export default ProductGrid;
