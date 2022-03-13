@@ -3,7 +3,7 @@ import {useContext} from "react";
 import {PageContext} from "../../contexts/pageContext";
 
 function Navbar() {
-     const [state, dispatch] = useContext(PageContext)
+     const [,dispatch] = useContext(PageContext)
 
     return (
         <>
