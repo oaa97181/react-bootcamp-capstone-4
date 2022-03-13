@@ -9,27 +9,27 @@ function Sidebar({productCategories, categoryArray, setCategoryArray}) {
     }
 
     function openSidebar() {
-        document.getElementById("filterSidebar").style.display = "block";
-        document.getElementById("sidebarIcon").style.display = "none";
+        document.getElementById("sidebar-container").style.display = "block";
+        document.getElementById("sidebar-button").style.display = "none";
 
     }
 
     function closeSidebar() {
-        document.getElementById("filterSidebar").style.display = "none";
-        document.getElementById("sidebarIcon").style.display = "block";
+        document.getElementById("sidebar-container").style.display = "none";
+        document.getElementById("sidebar-button").style.display = "block";
     }
 
     return (
         <>
-            <button className="sidebar-button" onClick={openSidebar} id='sidebarIcon'>☰</button>
+            <button className="sidebar-button" onClick={openSidebar} id='sidebar-button'>☰</button>
 
-            <div className="sidebar-container" id="filterSidebar">
+            <div className="sidebar-container" id="sidebar-container">
 
                 <button className="close-button" onClick={closeSidebar}>Close &times;</button>
 
                 {productCategories.results.map(category => {
                     return (
-                        <div key={category.data.name} className="sidebar-button"
+                        <div key={category.data.name} className="sidebar-filter"
                              onChange={(e) => {
                                  handleChange(e, category.data.name.toLowerCase())
                              }}>
