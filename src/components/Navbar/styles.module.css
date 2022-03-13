@@ -27,6 +27,10 @@
     position: relative;
 }
 
+.logoContainer{
+    cursor: pointer;
+}
+
 input {
     padding-left: 25px;
 }

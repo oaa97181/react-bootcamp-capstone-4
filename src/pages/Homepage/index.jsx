@@ -1,6 +1,6 @@
-import Slider from "./Slider";
-import ProductGrid from "../ReusableComponents/ProductGrid";
-import CategoryGrid from "../ReusableComponents/CategoryGrid";
+import Slider from "../../components/Slider";
+import ProductGrid from "../../components/ReusableComponents/ProductGrid";
+import CategoryGrid from "../../components/ReusableComponents/CategoryGrid";
 import featuredBanners from '../../data/mocks/en-us/featured-banners.json'
 import featuredProducts from '../../data/mocks/en-us/featured-products.json'
 import productCategories from '../../data/mocks/en-us/product-categories.json'
@@ -11,7 +11,7 @@ function Homepage() {
         <>
             <Slider data={featuredBanners}/>
             <CategoryGrid data={productCategories}/>
-            <ProductGrid data={featuredProducts}/>
+            <ProductGrid products={featuredProducts} title='Featured Products'/>
         </>
     );
 }
