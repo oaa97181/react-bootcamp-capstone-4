@@ -3,16 +3,23 @@
     padding: 8px 16px;
     background-color: inherit;
     cursor: pointer !important;
+    font-size: 25px;
+}
+
+.sidebar-filter {
+    padding: 8px 16px;
+    cursor: pointer !important;
+    font-size: 18px;
 }
 
 .close-button {
-        background-color: inherit;
+    background-color: inherit;
     cursor: pointer;
     width: 100%;
     padding: 8px 16px;
     text-align: left;
     border: none;
-    font-size: 18px !important;
+    font-size: 25px;
 }
 
 .sidebar-container {
