@@ -9,24 +9,15 @@ import LoadingComponent from "../../components/ReusableComponents/LoadingCompone
 function ProductList() {
 
     const [categoryArray, setCategoryArray] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
-    setTimeout(()=>{
-        setIsLoading(false)
-    }, 2000);
-    
     return (
         <>
-            {isLoading ?
-                <LoadingComponent/>
-                :
-                <>
-                    <Sidebar productCategories={productCategories} categoryArray={categoryArray}
-                             setCategoryArray={setCategoryArray}/>
-                    <ProductGrid products={products} title='All Products'
-                                 categoryArray={categoryArray}/>
-                </>
-            }
+            <LoadingComponent data={products}/>
+
+            <Sidebar productCategories={productCategories} categoryArray={categoryArray}
+                     setCategoryArray={setCategoryArray}/>
+            <ProductGrid products={products} title='All Products'
+                         categoryArray={categoryArray}/>
         </>
     );
 }
