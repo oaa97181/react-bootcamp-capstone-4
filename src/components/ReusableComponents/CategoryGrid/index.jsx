@@ -1,6 +1,7 @@
 import styles from "./styles.module.css";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
+import {Link} from "react-router-dom";
 
 function CategoryGrid() {
     const {data, isLoading} = useWizelineData('category', 30);
@@ -15,10 +16,12 @@ function CategoryGrid() {
                         {data.results.map(category => {
                             return (
                                 <div className={styles.imgContainer} key={category.id}>
+                                <Link to={`/products?category=${category.data.name}`}>
                                     <img className={styles.categoryImg}
                                          src={category.data.main_image.url}
                                          alt={category.data.name}/>
                                     <p>{category.data.name}</p>
+                                </Link>
                                 </div>
                             )
                         })}
