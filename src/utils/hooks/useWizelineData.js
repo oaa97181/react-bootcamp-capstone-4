@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../constants';
 import { useLatestAPI } from './useLatestAPI';
 
-export function useWizelineData(category, pageSize) {
+export function useWizelineData(category, pageSize, tags) {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [data, setData] = useState(() => ({
     data: {},
@@ -19,10 +19,9 @@ export function useWizelineData(category, pageSize) {
     async function getFeaturedBanners() {
       try {
         setData({ data: {}, isLoading: true });
-
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-            `[[at(document.type, "${category}")]]`
+              `[[at(document.type, "${category}")]]` + `[[at(document.tags, "${tags}")]]`
           )}&lang=en-us&pageSize=${pageSize}`,
           {
             signal: controller.signal,
