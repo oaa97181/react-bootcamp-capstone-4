@@ -1,21 +1,20 @@
-import styles from  "./styles.module.css";
-import {useContext} from "react";
-import {PageContext} from "../../contexts/pageContext";
+import styles from "./styles.module.css";
+import {Link} from "react-router-dom";
 
 function Navbar() {
-     const [,dispatch] = useContext(PageContext)
 
     return (
         <>
             <nav className={styles.navbar}>
                 <div className={styles.navContainer}>
 
-                    {/* eslint-disable-next-line max-len */}
-                    <div onClick={() => dispatch({ type: "home" })} className={styles.logoContainer}>
-                        <i className={`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
-                        React Shop
-                        <i className= {`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
-                    </div>
+                    <Link to="/home">
+                        <div className={styles.logoContainer}>
+                            <i className={`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
+                            React Shop
+                            <i className={`fa fa-dumpster-fire ${styles.iconsMargin}`}/>
+                        </div>
+                    </Link>
 
                     <div className={styles.searchContainer}>
                         <input className={styles.searchInput} placeholder="Search.."/>

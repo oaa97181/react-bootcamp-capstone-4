@@ -1,12 +1,12 @@
 import styles from "./styles.module.css";
 import ProductCard from "../ProductCard";
 import PropTypes from "prop-types";
-import {PageContext} from "../../../contexts/pageContext";
-import {useContext} from "react";
+import {Link} from "react-router-dom";
 
 
 function ProductGrid({products, title, categoryArray}) {
-    const [state, dispatch] = useContext(PageContext)
+
+    const pathName = window.location.pathname;
 
     function renderProductCards() {
         let productCardsArray = products.results.map((product) => {
@@ -39,15 +39,22 @@ function ProductGrid({products, title, categoryArray}) {
                 {renderProductCards()}
             </div>
             <div className={styles.buttonContainer}>
-                {state.page === 'home' ?
-                    <button onClick={() => dispatch({type: "productList"})}>View all
-                        products</button>
+                {pathName === '/home' ?
+                    <button>
+                        <Link to="/products">
+                            View all products
+                        </Link>
+                    </button>
                     :
-                    <button onClick={() => dispatch({type: "home"})}>Return to homescreen</button>
+                    <button>
+                        <Link to="/home">
+                            Return to homescreen
+                        </Link>
+                    </button>
                 }
 
             </div>
-            {state.page === 'productList' &&
+            {pathName === 'productList' &&
                 <div className={styles.paginationController}>
                     <div className={styles.paginationElement}>
                         <i className={`fa fa-arrow-left`}/>
