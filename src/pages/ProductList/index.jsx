@@ -16,8 +16,7 @@ function ProductList() {
 
             <Sidebar productCategories={productCategories} categoryArray={categoryArray}
                      setCategoryArray={setCategoryArray}/>
-            <ProductGrid products={products} title='All Products'
-                         categoryArray={categoryArray}/>
+            <ProductGrid products={products} title='All Products' categoryArray={categoryArray}/>
         </>
     );
 }
