@@ -17,18 +17,23 @@ function ProductGrid({title, categoryArray}) {
 
     function renderProductCards() {
         let productCardsArray = data.results.map((product) => {
+            const cardWithLink =
+                <>
+                    <Link to={`/product/${product.id}`}>
+                        <ProductCard product={product} key={product.id}/>
+                    </Link>
+                </>
             if (categoryArray) {
                 if (categoryArray.length === 0) {
                     //return all since no category is selected
-                    return <ProductCard product={product} key={product.id}/>
+                    return cardWithLink
                 } else {
                     //filter by category
-                    return categoryArray.includes(product.data.category.slug) &&
-                        <ProductCard product={product} key={product.id}/>
+                    return categoryArray.includes(product.data.category.slug) && cardWithLink
                 }
             } else {
                 //return all, without category filters
-                return <ProductCard product={product} key={product.id}/>
+                return cardWithLink
             }
         })
 
