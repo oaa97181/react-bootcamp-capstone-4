@@ -5,11 +5,10 @@ import Arrows from "./Arrows";
 import "./slider.css";
 import PropTypes from "prop-types";
 
-function Slider({data}) {
-
-    const length = data.results.length - 1;
+function Slider({data, isLoading}) {
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [length, setLength] = useState(0);
 
     const nextSlide = useCallback(
         () => {
@@ -24,28 +23,42 @@ function Slider({data}) {
         return () => clearInterval(interval);
     }, [activeIndex, length, nextSlide]);
 
+    useEffect(() => {
+        if (data.results) {
+            console.log(data)
+            setLength(data.results.length - 1)
+        }
+    }, [data]);
+
+
     return (
-        <div className="slider-container">
-            <SliderContent activeIndex={activeIndex} sliderImages={data.results}/>
-            <Arrows
-                prevSlide={() =>
-                    setActiveIndex(activeIndex < 1 ? length : activeIndex - 1)
-                }
-                nextSlide={() =>
-                    nextSlide()
-                }
-            />
-            <Dots
-                activeIndex={activeIndex}
-                sliderImage={data.results}
-                onclick={(activeIndex) => setActiveIndex(activeIndex)}
-            />
-        </div>
+        <>
+            {
+                !isLoading &&
+                <div className="slider-container">
+                    <SliderContent activeIndex={activeIndex} sliderImages={data.results}/>
+                    <Arrows
+                        prevSlide={() =>
+                            setActiveIndex(activeIndex < 1 ? length : activeIndex - 1)
+                        }
+                        nextSlide={() =>
+                            nextSlide()
+                        }
+                    />
+                    <Dots
+                        activeIndex={activeIndex}
+                        sliderImage={data.results}
+                        onclick={(activeIndex) => setActiveIndex(activeIndex)}
+                    />
+                </div>
+            }
+        </>
     );
 }
 
 Slider.propTypes = {
     data: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 };
 
 export default Slider;

@@ -1,4 +1,3 @@
-import {useFeaturedBanners} from './utils/hooks/useFeaturedBanners';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import {
@@ -11,15 +10,13 @@ import ProductList from "./pages/ProductList";
 
 
 function App() {
-    const {data, isLoading} = useFeaturedBanners();
-    console.log(data, isLoading);
 
     return (
         <Router>
             <Navbar/>
             <Switch>
-                <Route path='/products' component={ProductList}/>
                 <Route path="/home" component={Homepage}/>
+                <Route path='/products' component={ProductList}/>
                 <Redirect to="/home" />
             </Switch>
             <Footer/>

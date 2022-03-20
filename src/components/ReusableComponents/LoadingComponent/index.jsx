@@ -6,7 +6,7 @@ function LoadingComponent(data) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (data !== null) {
+        if (data.data.results) {
             setIsLoading(false)
         }
     }, [data]);
