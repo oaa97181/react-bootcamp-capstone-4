@@ -27,7 +27,13 @@
     position: relative;
 }
 
-.logoContainer{
+.searchInput {
+    border: none;
+    border-radius: 1%;
+    font-size: 17px;
+}
+
+.logoContainer {
     cursor: pointer;
 }
 

@@ -18,7 +18,7 @@ function Navbar() {
                     </div>
 
                     <div className={styles.searchContainer}>
-                        <input/>
+                        <input className={styles.searchInput} placeholder="Search.."/>
                         <label className={`fa fa-magnifying-glass fa-sm ${styles.searchIcon}`}/>
                     </div>
 
