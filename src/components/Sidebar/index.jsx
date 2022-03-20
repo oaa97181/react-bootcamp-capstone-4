@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 function Sidebar({productCategories, categoryArray, setCategoryArray}) {
 
     function handleChange(e, value) {
-        // eslint-disable-next-line max-len
-        return categoryArray.indexOf(value) === -1 ? setCategoryArray([...categoryArray, value]) : setCategoryArray(categoryArray.filter(item => item !== value));
+        return categoryArray.indexOf(value) === -1 ?
+            setCategoryArray([...categoryArray, value]) :
+            setCategoryArray(categoryArray.filter(item => item !== value));
     }
 
     function openSidebar() {
