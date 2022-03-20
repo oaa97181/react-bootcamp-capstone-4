@@ -19,11 +19,10 @@ function ProductGrid({title, categoryArray}) {
     function renderProductCards() {
         let productCardsArray = data.results.map((product) => {
             const cardWithLink =
-                <>
                     <Link to={`/product/${product.id}`} key={product.id+'-link'}>
-                        <ProductCard product={product} key={product.id}/>
+                        <ProductCard product={product}/>
                     </Link>
-                </>
+
             if (categoryArray) {
                 if (categoryArray.length === 0) {
                     //return all since no category is selected

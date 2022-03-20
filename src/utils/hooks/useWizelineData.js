@@ -21,7 +21,7 @@ export function useWizelineData(type, pageSize, tags) {
         setData({ data: {}, isLoading: true });
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-              `[[at(document.type, "${type}")]]` + `[[at(document.tags, "${tags}")]]`
+              `[[at(document.type, "${type}")]]` , `[[at(document.tags, "${tags}")]]`
           )}&lang=en-us&pageSize=${pageSize}`,
           {
             signal: controller.signal,
@@ -29,7 +29,7 @@ export function useWizelineData(type, pageSize, tags) {
         );
         const data = await response.json();
 
-        console.log('data in useWizelineData w/ type ' + type, data)
+        // console.log('data in useWizelineData w/ type ' + type, data)
 
         setData({ data, isLoading: false });
       } catch (err) {
@@ -43,7 +43,7 @@ export function useWizelineData(type, pageSize, tags) {
     return () => {
       controller.abort();
     };
-  }, [apiRef, isApiMetadataLoading]);
+  }, [apiRef, isApiMetadataLoading, pageSize, tags, type]);
 
   return data;
 }

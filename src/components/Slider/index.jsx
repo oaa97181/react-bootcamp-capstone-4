@@ -26,7 +26,6 @@ function Slider() {
     }, [activeIndex, length, nextSlide]);
 
     useEffect(() => {
-        console.log(data)
         if (data?.results) {
             setLength(data.results.length - 1)
         }
