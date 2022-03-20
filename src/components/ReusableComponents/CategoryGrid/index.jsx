@@ -1,29 +1,31 @@
 import styles from "./styles.module.css";
-import PropTypes from "prop-types";
+import {useWizelineData} from "../../../utils/hooks/useWizelineData";
+import LoadingComponent from "../LoadingComponent";
 
-function CategoryGrid({data}) {
+function CategoryGrid() {
+    const {data, isLoading} = useWizelineData('category', 30);
 
     return (
         <>
-            <section className={styles.categoryContainer}>
-                {data.results.map(category => {
-                    return (
-                        <div className={styles.imgContainer} key={category.id}>
-                            <img className={styles.categoryImg} src={category.data.main_image.url}
-                                 alt={category.data.name}/>
-                            <p>{category.data.name}</p>
-                        </div>
-                    )
-                })}
-
-            </section>
-
+            {
+                isLoading ?
+                    <LoadingComponent data={data}/>
+                    :
+                    <section className={styles.categoryContainer}>
+                        {data.results.map(category => {
+                            return (
+                                <div className={styles.imgContainer} key={category.id}>
+                                    <img className={styles.categoryImg}
+                                         src={category.data.main_image.url}
+                                         alt={category.data.name}/>
+                                    <p>{category.data.name}</p>
+                                </div>
+                            )
+                        })}
+                    </section>
+            }
         </>
     );
 }
-
-CategoryGrid.propTypes = {
-    data: PropTypes.object.isRequired,
-};
 
 export default CategoryGrid;
