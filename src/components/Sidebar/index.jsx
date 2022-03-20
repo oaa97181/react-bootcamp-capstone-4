@@ -38,7 +38,6 @@ function Sidebar({categoryArray, setCategoryArray}) {
                                 onClick={closeSidebar}>Close &times;</button>
 
                         {data.results.map(category => {
-                            console.log(category.data)
                             return (
                                 <div key={category.data.name} className="sidebar-filter"
                                      onChange={(e) => {
