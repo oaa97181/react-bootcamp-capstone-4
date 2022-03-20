@@ -3,9 +3,11 @@ import SliderContent from "./SliderContent";
 import Dots from "./Dots";
 import Arrows from "./Arrows";
 import "./slider.css";
-import PropTypes from "prop-types";
+import {useWizelineData} from "../../utils/hooks/useWizelineData";
+import LoadingComponent from "../ReusableComponents/LoadingComponent";
 
-function Slider({data, isLoading}) {
+function Slider() {
+    const {data, isLoading} = useWizelineData('banner', 5);
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [length, setLength] = useState(0);
@@ -24,8 +26,8 @@ function Slider({data, isLoading}) {
     }, [activeIndex, length, nextSlide]);
 
     useEffect(() => {
-        if (data.results) {
-            console.log(data)
+        console.log(data)
+        if (data?.results) {
             setLength(data.results.length - 1)
         }
     }, [data]);
@@ -34,31 +36,28 @@ function Slider({data, isLoading}) {
     return (
         <>
             {
-                !isLoading &&
-                <div className="slider-container">
-                    <SliderContent activeIndex={activeIndex} sliderImages={data.results}/>
-                    <Arrows
-                        prevSlide={() =>
-                            setActiveIndex(activeIndex < 1 ? length : activeIndex - 1)
-                        }
-                        nextSlide={() =>
-                            nextSlide()
-                        }
-                    />
-                    <Dots
-                        activeIndex={activeIndex}
-                        sliderImage={data.results}
-                        onclick={(activeIndex) => setActiveIndex(activeIndex)}
-                    />
-                </div>
+                isLoading ?
+                    <LoadingComponent data={data}/>
+                    :
+                    <div className="slider-container">
+                        <SliderContent activeIndex={activeIndex} sliderImages={data.results}/>
+                        <Arrows
+                            prevSlide={() =>
+                                setActiveIndex(activeIndex < 1 ? length : activeIndex - 1)
+                            }
+                            nextSlide={() =>
+                                nextSlide()
+                            }
+                        />
+                        <Dots
+                            activeIndex={activeIndex}
+                            sliderImage={data.results}
+                            onclick={(activeIndex) => setActiveIndex(activeIndex)}
+                        />
+                    </div>
             }
         </>
     );
 }
-
-Slider.propTypes = {
-    data: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-};
 
 export default Slider;
