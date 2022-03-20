@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../constants';
 import { useLatestAPI } from './useLatestAPI';
 
-export function useWizelineData(category, pageSize, tags) {
+export function useWizelineData(type, pageSize, tags) {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [data, setData] = useState(() => ({
     data: {},
@@ -21,7 +21,7 @@ export function useWizelineData(category, pageSize, tags) {
         setData({ data: {}, isLoading: true });
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-              `[[at(document.type, "${category}")]]` + `[[at(document.tags, "${tags}")]]`
+              `[[at(document.type, "${type}")]]` + `[[at(document.tags, "${tags}")]]`
           )}&lang=en-us&pageSize=${pageSize}`,
           {
             signal: controller.signal,
@@ -29,7 +29,7 @@ export function useWizelineData(category, pageSize, tags) {
         );
         const data = await response.json();
 
-        console.log(data)
+        console.log('data in useWizelineData w/ type ' + type, data)
 
         setData({ data, isLoading: false });
       } catch (err) {
