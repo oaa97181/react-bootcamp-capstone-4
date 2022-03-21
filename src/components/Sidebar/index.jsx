@@ -12,6 +12,10 @@ function Sidebar({categoryArray, setCategoryArray}) {
             setCategoryArray(categoryArray.filter(item => item !== value));
     }
 
+    function clearFilters() {
+        return setCategoryArray([])
+    }
+
     function openSidebar() {
         document.getElementById("sidebar-container").style.display = "block";
         document.getElementById("sidebar-button").style.display = "none";
@@ -38,17 +42,32 @@ function Sidebar({categoryArray, setCategoryArray}) {
                                 onClick={closeSidebar}>Close &times;</button>
 
                         {data.results.map(category => {
+                            const categoryName = category.data.name;
                             return (
-                                <div key={category.data.name} className="sidebar-filter"
-                                     onChange={(e) => {
-                                         handleChange(e, category.data.name.toLowerCase())
-                                     }}>
-                                    <input type="checkbox" name={category.data.name}
-                                           value={category.data.name}/>
-                                    <label> {category.data.name}</label>
+                                <div key={category.data.name} className="sidebar-filter">
+                                    <input type="checkbox"
+                                           name={categoryName}
+                                           value={categoryName}
+                                           checked={
+                                               categoryArray.includes(categoryName.toLowerCase())}
+                                           onChange={(e) => {
+                                               handleChange(e, categoryName.toLowerCase())
+                                           }}
+                                    />
+                                    <label> {categoryName}</label>
                                 </div>
                             )
                         })}
+                        {
+                            categoryArray.length >= 1 &&
+                            <div className="buttonContainer">
+                            <button
+                                onClick={() => {
+                                clearFilters()
+                            }}> Clear all filters
+                            </button>
+                            </div>
+                        }
                     </div>
                 </>
             }

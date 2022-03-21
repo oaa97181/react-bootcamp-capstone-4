@@ -55,7 +55,7 @@ function ProductGrid({title, categoryArray}) {
                             </div>
                             {renderProductCards()}
                         </div>
-                        <div className={styles.buttonContainer}>
+                        <div className='buttonContainer'>
                             {pathName === '/home' ?
                                 <button>
                                     <Link to="/products">
