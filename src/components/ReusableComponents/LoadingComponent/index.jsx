@@ -15,7 +15,7 @@ function LoadingComponent(data) {
         isLoading &&
         <>
             <div className={styles.loadingContainer}>
-                <img src="./images/loading.gif" alt="Loading..." className={styles.img}/>
+                <img src="/images/loading.gif" alt="Loading..." className={styles.img}/>
                 <p>Loading...</p>
             </div>
         </>
