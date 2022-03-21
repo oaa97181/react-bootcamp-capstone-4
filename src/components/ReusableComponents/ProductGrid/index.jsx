@@ -13,15 +13,20 @@ function ProductGrid({title, categoryArray}) {
         data,
         isLoading,
     } = useWizelineData('product',
-        pathName === '/home' ? 16 : 12, pathName === '/home' ? 'Featured' : '');
+        pathName === '/home' ? 16 : 1000, pathName === '/home' ? 'Featured' : '');
 
 
     function renderProductCards() {
         let productCardsArray = data.results.map((product) => {
             const cardWithLink =
-                    <Link to={`/product/${product.id}`} key={product.id+'-link'}>
-                        <ProductCard product={product}/>
-                    </Link>
+                <Link to={`/product/${product.id}`} key={product.id + '-link'}>
+                    <ProductCard product={product}/>
+                    <div className='buttonContainer'>
+                        <button>
+                            Add to cart
+                        </button>
+                    </div>
+                </Link>
 
             if (categoryArray) {
                 if (categoryArray.length === 0) {
