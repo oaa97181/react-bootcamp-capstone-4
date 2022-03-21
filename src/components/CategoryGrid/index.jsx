@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
-import {useWizelineData} from "../../../utils/hooks/useWizelineData";
-import LoadingComponent from "../LoadingComponent";
+import {useWizelineData} from "../../utils/hooks/useWizelineData";
+import LoadingComponent from "../ReusableComponents/LoadingComponent";
 import {Link} from "react-router-dom";
 
 function CategoryGrid() {

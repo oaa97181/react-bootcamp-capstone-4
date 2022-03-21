@@ -1,5 +1,5 @@
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/ReusableComponents/Navbar";
+import Footer from "./components/ReusableComponents/Footer";
 import {
     BrowserRouter as Router,
     Switch,

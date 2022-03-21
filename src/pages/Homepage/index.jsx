@@ -1,6 +1,6 @@
 import Slider from "../../components/Slider";
 import ProductGrid from "../../components/ReusableComponents/ProductGrid";
-import CategoryGrid from "../../components/ReusableComponents/CategoryGrid";
+import CategoryGrid from "../../components/CategoryGrid";
 
 function Homepage() {
     return (
