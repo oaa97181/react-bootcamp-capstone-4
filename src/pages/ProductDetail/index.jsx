@@ -1,9 +1,8 @@
+import ProductDetailComponent from "../../components/ProductDetail";
 
 function ProductDetail() {
     return (
-        <>
-         hey
-        </>
+        <ProductDetailComponent/>
     );
 }
 

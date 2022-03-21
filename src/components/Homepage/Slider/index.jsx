@@ -3,8 +3,8 @@ import SliderContent from "./SliderContent";
 import Dots from "./Dots";
 import Arrows from "./Arrows";
 import "./slider.css";
-import {useWizelineData} from "../../utils/hooks/useWizelineData";
-import LoadingComponent from "../ReusableComponents/LoadingComponent";
+import {useWizelineData} from "../../../utils/hooks/useWizelineData";
+import LoadingComponent from "../../ReusableComponents/LoadingComponent";
 
 function Slider() {
     const {data, isLoading} = useWizelineData('banner', 5);
