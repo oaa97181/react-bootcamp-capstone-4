@@ -1,49 +1,57 @@
-import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
-import { useLatestAPI } from './useLatestAPI';
+import {useState, useEffect} from 'react';
+import {API_BASE_URL} from '../constants';
+import {useLatestAPI} from './useLatestAPI';
 
-export function useWizelineData(type, pageSize, tags) {
-  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
-  const [data, setData] = useState(() => ({
-    data: {},
-    isLoading: true,
-  }));
+export function useWizelineData(type, pageSize, tags, productId) {
+    const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI();
+    const [data, setData] = useState(() => ({
+        data: {},
+        isLoading: true,
+    }));
 
-  useEffect(() => {
-    if (!apiRef || isApiMetadataLoading) {
-      return () => {};
+    let replacedURL = ''
+    if (productId) {
+        replacedURL = `[[at(document.id, "${productId}")]]`
+    } else {
+        replacedURL = `[[at(document.type, "${type}")]]` + `[[at(document.tags, "${tags}")]]`
     }
 
-    const controller = new AbortController();
+    useEffect(() => {
+        if (!apiRef || isApiMetadataLoading) {
+            return () => {
+            };
+        }
 
-    async function getFeaturedBanners() {
-      try {
-        setData({ data: {}, isLoading: true });
-        const response = await fetch(
-          `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-              `[[at(document.type, "${type}")]]` , `[[at(document.tags, "${tags}")]]`
-          )}&lang=en-us&pageSize=${pageSize}`,
-          {
-            signal: controller.signal,
-          }
-        );
-        const data = await response.json();
+        const controller = new AbortController();
 
-        // console.log('data in useWizelineData w/ type ' + type, data)
+        async function getFeaturedBanners() {
+            try {
+                setData({data: {}, isLoading: true});
+                const response = await fetch(
+                    `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
+                        replacedURL
+                    )}&lang=en-us&pageSize=${pageSize}`,
+                    {
+                        signal: controller.signal,
+                    }
+                );
+                const data = await response.json();
 
-        setData({ data, isLoading: false });
-      } catch (err) {
-        setData({ data: {}, isLoading: false });
-        console.error(err);
-      }
-    }
+                // console.log('data in useWizelineData w/ type ' + type, data)
 
-    getFeaturedBanners();
+                setData({data, isLoading: false});
+            } catch (err) {
+                setData({data: {}, isLoading: false});
+                console.error(err);
+            }
+        }
 
-    return () => {
-      controller.abort();
-    };
-  }, [apiRef, isApiMetadataLoading, pageSize, tags, type]);
+        getFeaturedBanners();
 
-  return data;
+        return () => {
+            controller.abort();
+        };
+    }, [apiRef, isApiMetadataLoading, pageSize, tags, type]);
+
+    return data;
 }
