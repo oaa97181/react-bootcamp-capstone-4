@@ -13,7 +13,7 @@ export function useWizelineData(type, pageSize, tags, productId) {
     if (productId) {
         replacedURL = `[[at(document.id, "${productId}")]]`
     } else {
-        replacedURL = `[[at(document.type, "${type}")]]` + `[[at(document.tags, "${tags}")]]`
+        replacedURL = `[[at(document.type, "${type}")]] [[at(document.tags, "${tags}")]]`
     }
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export function useWizelineData(type, pageSize, tags, productId) {
         return () => {
             controller.abort();
         };
-    }, [apiRef, isApiMetadataLoading, pageSize, tags, type]);
+    }, [apiRef, isApiMetadataLoading, pageSize, replacedURL, tags, type]);
 
     return data;
 }

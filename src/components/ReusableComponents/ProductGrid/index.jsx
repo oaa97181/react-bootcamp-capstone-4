@@ -40,7 +40,7 @@ function ProductGrid({title, categoryArray}) {
                     allProductsPageLimit, allProductsPageLimit * currentPage
                 )])
         }
-    }, [currentPage]);
+    }, [currentPage, data.results, products.length]);
 
     function renderProductCards() {
         let productCardsArray = products.map((product) => {
