@@ -4,20 +4,46 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
+import {useEffect, useState} from "react";
 
 
 function ProductGrid({title, categoryArray}) {
     const pathName = window.location.pathname;
 
-    const {
-        data,
-        isLoading,
-    } = useWizelineData('product',
-        pathName === '/home' ? 16 : 1000, pathName === '/home' ? 'Featured' : '');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [products, setProducts] = useState([]);
+    const allProductsPageLimit = 12
 
+    function handleClick(page) {
+        return setCurrentPage(page === 0 ? 1 : page)
+    }
+
+    const {data, isLoading} =
+        useWizelineData('product',
+            pathName === '/home' ? 16 : 1000,
+            pathName === '/home' ? 'Featured' : '');
+
+    useEffect(() => {
+        if ((data?.results?.length > 0)) {
+            setProducts(data.results.slice(
+                0, pathName.includes('products') ? allProductsPageLimit : 16)
+            )
+        }
+    }, [data, pathName]);
+
+
+    useEffect(() => {
+        if (products.length>0) {
+            return setProducts(
+                [...data.results.slice(
+                    currentPage * allProductsPageLimit -
+                    allProductsPageLimit, allProductsPageLimit * currentPage
+                )])
+        }
+    }, [currentPage]);
 
     function renderProductCards() {
-        let productCardsArray = data.results.map((product) => {
+        let productCardsArray = products.map((product) => {
             const cardWithLink =
                 <Link to={`/product/${product.id}`} key={product.id + '-link'}>
                     <ProductCard product={product}/>
@@ -43,7 +69,7 @@ function ProductGrid({title, categoryArray}) {
         })
 
         return productCardsArray.every(productCard => productCard === false) ?
-            <div className={styles.noProdcuts}> No products found for selected categories
+            <div className={styles.noProdcuts}> No more products found
                 😭 </div> : productCardsArray
     }
 
@@ -60,6 +86,7 @@ function ProductGrid({title, categoryArray}) {
                             </div>
                             {renderProductCards()}
                         </div>
+
                         <div className='buttonContainer'>
                             {pathName === '/home' ?
                                 <button>
@@ -76,17 +103,28 @@ function ProductGrid({title, categoryArray}) {
                             }
                         </div>
 
-                        {pathName === 'productList' &&
-                            <div className={styles.paginationController}>
-                                <div className={styles.paginationElement}>
-                                    <i className={`fa fa-arrow-left`}/>
-                                    Previous Page
-                                </div>
-                                <div className={styles.paginationElement}>
-                                    <i className={`fa fa-arrow-right`}/>
-                                    Next Page
-                                </div>
+                        {
+                            pathName.includes('products') &&
+
+                            <div className={styles.paginationController} id={String(currentPage)}>
+                                {currentPage !== 1 &&
+                                    <div className={styles.paginationElement} onClick={() => {
+                                        handleClick(currentPage - 1)
+                                    }}>
+                                        <i className={`fa fa-arrow-left`}/>
+                                        Previous Page
+                                    </div>
+                                }
+                                {products.length % allProductsPageLimit === 0 &&
+                                    <div className={styles.paginationElement} onClick={() => {
+                                        handleClick(currentPage + 1)
+                                    }}>
+                                        <i className={`fa fa-arrow-right`}/>
+                                        Next Page
+                                    </div>
+                                }
                             </div>
+
                         }
                     </>
             }
