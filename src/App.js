@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ProductList from "./pages/ProductList";
+import ProductDetail from "./pages/ProductDetail";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Switch>
                 <Route path="/home" component={Homepage}/>
                 <Route path='/products' component={ProductList}/>
+                <Route path='/product/:productId' component={ProductDetail}/>
                 <Redirect to="/home" />
             </Switch>
             <Footer/>
