@@ -22,7 +22,6 @@ function ProductDetailComponent() {
                                 <SlideShow
                                     images={
                                         data.results[0].data.images.map((img) => {
-                                            console.log(img)
                                             return img.image.url
                                         })}
                                     width="600px"
@@ -44,7 +43,7 @@ function ProductDetailComponent() {
                                     <div>
                                         {data.results[0].tags.map((tag) => {
                                             return (
-                                                <label>
+                                                <label key={tag}>
                                                     <i className={`fa fa-tag ${styles.tagIcon}`}/>
                                                     {tag}
                                                 </label>
@@ -55,7 +54,9 @@ function ProductDetailComponent() {
                                     <ul>
                                         {data.results[0].data.specs.map((spec) => {
                                             return (
-                                                <li>{spec.spec_name}: {spec.spec_value}</li>
+                                                <li key={spec.spec_name}>
+                                                    {spec.spec_name}: {spec.spec_value}
+                                                </li>
                                             )
                                         })}
                                     </ul>
