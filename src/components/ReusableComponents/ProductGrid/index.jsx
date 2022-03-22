@@ -9,31 +9,41 @@ import {useEffect, useState} from "react";
 
 function ProductGrid({title, categoryArray}) {
     const pathName = window.location.pathname;
+    let params = (new URL(document.location)).searchParams;
+    let query = params.get("q");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
-    const allProductsPageLimit = 12
+    const allProductsPageLimit =
+        pathName.includes('products') ? 12 : pathName.includes('home') ? 16 : 20
 
     function handleClick(page) {
         return setCurrentPage(page === 0 ? 1 : page)
     }
 
-    const {data, isLoading} =
-        useWizelineData('product',
-            pathName === '/home' ? 16 : 1000,
-            pathName === '/home' ? 'Featured' : '');
+    let paramsArray = [
+        'product',
+        pathName === '/home' ? 16 : pathName === '/products' ? 30 : 20,
+        pathName === '/home' ? 'Featured' : '',
+        '',
+        pathName === '/search' ? query : '',
+    ]
+
+    let {data, isLoading} = useWizelineData(
+        paramsArray[0], paramsArray[1], paramsArray[2], paramsArray[3], paramsArray[4]);
+    console.log(data)
 
     useEffect(() => {
         if ((data?.results?.length > 0)) {
             setProducts(data.results.slice(
-                0, pathName.includes('products') ? allProductsPageLimit : 16)
+                0, allProductsPageLimit)
             )
         }
     }, [data, pathName]);
 
 
     useEffect(() => {
-        if (products.length>0) {
+        if (products.length > 0) {
             return setProducts(
                 [...data.results.slice(
                     currentPage * allProductsPageLimit -
@@ -104,9 +114,9 @@ function ProductGrid({title, categoryArray}) {
                         </div>
 
                         {
-                            pathName.includes('products') &&
+                            (pathName.includes('products') || pathName.includes('search')) &&
 
-                            <div className={styles.paginationController} id={String(currentPage)}>
+                            <div className={styles.paginationController}>
                                 {currentPage !== 1 &&
                                     <div className={styles.paginationElement} onClick={() => {
                                         handleClick(currentPage - 1)

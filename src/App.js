@@ -19,6 +19,7 @@ function App() {
                 <Route path="/home" component={Homepage}/>
                 <Route path='/products' component={ProductList}/>
                 <Route path='/product/:productId' component={ProductDetail}/>
+                <Route path='/search' component={ProductList}/>
                 <Redirect to="/home" />
             </Switch>
             <Footer/>
