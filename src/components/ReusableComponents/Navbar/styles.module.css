@@ -27,12 +27,25 @@
     position: relative;
 }
 
-.logoContainer{
-    cursor: pointer;
+.searchInput {
+    border: none;
+    border-radius: 1%;
+    font-size: 17px;
+    padding-left: 25px;
 }
 
-input {
-    padding-left: 25px;
+.searchButton {
+    margin-left: 10px;
+    background-color: #738182;
+    border: none;
+    color: white;
+    padding: 3px 13px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logoContainer {
+    cursor: pointer;
 }
 
 .searchIcon {

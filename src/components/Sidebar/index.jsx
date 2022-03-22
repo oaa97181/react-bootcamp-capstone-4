@@ -1,11 +1,34 @@
 import "./styles.css";
 import PropTypes from "prop-types";
+import {useWizelineData} from "../../utils/hooks/useWizelineData";
+import {useEffect} from "react";
 
-function Sidebar({productCategories, categoryArray, setCategoryArray}) {
+function Sidebar({categoryArray, setCategoryArray}) {
+
+    const {data, isLoading} = useWizelineData('category', 30);
+
+    function setCategoryFromQuery() {
+        let params = (new URL(document.location)).searchParams;
+        let query = params.get("category");
+        console.log(query)
+        if (query)
+            {return setCategoryArray([...categoryArray, query.toLowerCase()])}
+        return true
+    }
+
+    useEffect(() => {
+        setCategoryFromQuery()
+    }, []);
+
 
     function handleChange(e, value) {
-        // eslint-disable-next-line max-len
-        return categoryArray.indexOf(value) === -1 ? setCategoryArray([...categoryArray, value]) : setCategoryArray(categoryArray.filter(item => item !== value));
+        return categoryArray.indexOf(value) === -1 ?
+            setCategoryArray([...categoryArray, value]) :
+            setCategoryArray(categoryArray.filter(item => item !== value));
+    }
+
+    function clearFilters() {
+        return setCategoryArray([])
     }
 
     function openSidebar() {
@@ -21,32 +44,55 @@ function Sidebar({productCategories, categoryArray, setCategoryArray}) {
 
     return (
         <>
-            <button className="sidebar-button" onClick={openSidebar} id='sidebar-button'>☰</button>
+            {
+                !isLoading &&
+                <>
+                    <button className="sidebar-button" onClick={openSidebar}
+                            id='sidebar-button'>☰
+                    </button>
 
-            <div className="sidebar-container" id="sidebar-container">
+                    <div className="sidebar-container" id="sidebar-container">
 
-                <button className="close-button" onClick={closeSidebar}>Close &times;</button>
+                        <button className="close-button"
+                                onClick={closeSidebar}>Close &times;</button>
 
-                {productCategories.results.map(category => {
-                    return (
-                        <div key={category.data.name} className="sidebar-filter"
-                             onChange={(e) => {
-                                 handleChange(e, category.data.name.toLowerCase())
-                             }}>
-                            <input type="checkbox" name={category.data.name}
-                                   value={category.data.name}/>
-                            <label> {category.data.name}</label>
-                        </div>
-                    )
-                })}
-            </div>
+                        {data.results.map(category => {
+                            const categoryName = category.data.name;
+                            const categorySlug = category.slugs[0];
+                            return (
+                                <div key={categorySlug} className="sidebar-filter">
+                                    <input type="checkbox"
+                                           name={categorySlug}
+                                           value={categorySlug}
+                                           checked={
+                                               categoryArray.includes(categorySlug.toLowerCase())}
+                                           onChange={(e) => {
+                                               handleChange(e, categorySlug.toLowerCase())
+                                           }}
+                                    />
+                                    <label> {categoryName}</label>
+                                </div>
+                            )
+                        })}
+                        {
+                            categoryArray.length >= 1 &&
+                            <div className="buttonContainer">
+                                <button
+                                    onClick={() => {
+                                        clearFilters()
+                                    }}> Clear all filters
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </>
+            }
         </>
     );
 }
 
 
 Sidebar.propTypes = {
-    productCategories: PropTypes.object.isRequired,
     categoryArray: PropTypes.array.isRequired,
     setCategoryArray: PropTypes.func.isRequired,
 };
