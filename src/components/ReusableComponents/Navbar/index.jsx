@@ -1,7 +1,18 @@
 import styles from "./styles.module.css";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {createRef} from "react";
+
 
 function Navbar() {
+
+    const history = useHistory();
+    const redirectToSearch = () => {
+        console.log(textInput.current.value)
+        history.push(`/search?q=${textInput.current.value}`);
+    };
+
+    let textInput = createRef();
+
 
     return (
         <>
@@ -17,8 +28,23 @@ function Navbar() {
                     </Link>
 
                     <div className={styles.searchContainer}>
-                        <input className={styles.searchInput} placeholder="Search.."/>
+
+                        <input
+                            className={styles.searchInput}
+                            placeholder="Type something..."
+                            ref={textInput}
+                        />
                         <label className={`fa fa-magnifying-glass fa-sm ${styles.searchIcon}`}/>
+
+                        <button
+                            className={styles.searchButton}
+                            onClick={() => {
+                                redirectToSearch()
+                            }}
+                        >
+                            Search!
+                        </button>
+
                     </div>
 
                     <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
