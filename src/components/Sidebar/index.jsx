@@ -1,10 +1,25 @@
 import "./styles.css";
 import PropTypes from "prop-types";
 import {useWizelineData} from "../../utils/hooks/useWizelineData";
+import {useEffect} from "react";
 
 function Sidebar({categoryArray, setCategoryArray}) {
 
     const {data, isLoading} = useWizelineData('category', 30);
+
+    function setCategoryFromQuery() {
+        let params = (new URL(document.location)).searchParams;
+        let query = params.get("category");
+        console.log(query)
+        if (query)
+            {return setCategoryArray([...categoryArray, query.toLowerCase()])}
+        return true
+    }
+
+    useEffect(() => {
+        setCategoryFromQuery()
+    }, []);
+
 
     function handleChange(e, value) {
         return categoryArray.indexOf(value) === -1 ?
@@ -61,11 +76,11 @@ function Sidebar({categoryArray, setCategoryArray}) {
                         {
                             categoryArray.length >= 1 &&
                             <div className="buttonContainer">
-                            <button
-                                onClick={() => {
-                                clearFilters()
-                            }}> Clear all filters
-                            </button>
+                                <button
+                                    onClick={() => {
+                                        clearFilters()
+                                    }}> Clear all filters
+                                </button>
                             </div>
                         }
                     </div>

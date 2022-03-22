@@ -16,7 +16,7 @@ function CategoryGrid() {
                         {data.results.map(category => {
                             return (
                                 <div className={styles.imgContainer} key={category.id}>
-                                <Link to={`/products?category=${category.data.name}`}>
+                                <Link to={`/products?category=${category.slugs[0]}`}>
                                     <img className={styles.categoryImg}
                                          src={category.data.main_image.url}
                                          alt={category.data.name}/>

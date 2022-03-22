@@ -35,11 +35,15 @@ function ProductGrid({title, categoryArray}) {
 
     useEffect(() => {
         if ((data?.results?.length > 0)) {
-            setProducts(data.results.slice(
-                0, allProductsPageLimit)
-            )
+            if (categoryArray?.length >= 1) {
+                return setProducts(data.results.filter
+                (product => product.data.category.slug === categoryArray[0]))
+            } else {
+                return setProducts(data.results.slice(
+                    0, allProductsPageLimit))
+            }
         }
-    }, [data, pathName]);
+    }, [allProductsPageLimit, categoryArray, data, pathName]);
 
 
     useEffect(() => {
