@@ -35,26 +35,25 @@ function ProductGrid({title, categoryArray}) {
 
     useEffect(() => {
         if ((data?.results?.length > 0)) {
-            if (categoryArray?.length >= 1) {
-                return setProducts(data.results.filter
-                (product => product.data.category.slug === categoryArray[0]))
-            } else {
-                return setProducts(data.results.slice(
-                    0, allProductsPageLimit))
-            }
+            return setProducts(data.results.slice(
+                0, allProductsPageLimit))
         }
-    }, [allProductsPageLimit, categoryArray, data, pathName]);
+    }, [allProductsPageLimit, data]);
 
 
     useEffect(() => {
         if (products.length > 0) {
+            if (categoryArray?.length >= 1) {
+                return setProducts(data.results.filter
+                (product => categoryArray.includes(product.data.category.slug)))
+            }
             return setProducts(
                 [...data.results.slice(
                     currentPage * allProductsPageLimit -
                     allProductsPageLimit, allProductsPageLimit * currentPage
                 )])
         }
-    }, [currentPage, data.results, products.length]);
+    }, [allProductsPageLimit, categoryArray, currentPage, data.results, products.length]);
 
     function renderProductCards() {
         let productCardsArray = products.map((product) => {

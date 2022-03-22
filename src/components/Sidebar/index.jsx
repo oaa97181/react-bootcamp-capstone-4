@@ -58,15 +58,16 @@ function Sidebar({categoryArray, setCategoryArray}) {
 
                         {data.results.map(category => {
                             const categoryName = category.data.name;
+                            const categorySlug = category.slugs[0];
                             return (
-                                <div key={category.data.name} className="sidebar-filter">
+                                <div key={categorySlug} className="sidebar-filter">
                                     <input type="checkbox"
-                                           name={categoryName}
-                                           value={categoryName}
+                                           name={categorySlug}
+                                           value={categorySlug}
                                            checked={
-                                               categoryArray.includes(categoryName.toLowerCase())}
+                                               categoryArray.includes(categorySlug.toLowerCase())}
                                            onChange={(e) => {
-                                               handleChange(e, categoryName.toLowerCase())
+                                               handleChange(e, categorySlug.toLowerCase())
                                            }}
                                     />
                                     <label> {categoryName}</label>
