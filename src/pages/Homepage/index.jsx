@@ -7,7 +7,7 @@ function Homepage() {
         <>
             <Slider/>
             <CategoryGrid/>
-            <ProductGrid title='Featured Products'/>
+            <ProductGrid/>
         </>
     );
 }

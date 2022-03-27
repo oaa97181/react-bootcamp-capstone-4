@@ -5,9 +5,13 @@ import {Link} from "react-router-dom";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
 import {useCallback, useEffect, useState} from "react";
+import Sidebar from "../../Sidebar";
 
 
-function ProductGrid({title, categoryArray}) {
+function ProductGrid() {
+
+    const [categoryArray, setCategoryArray] = useState([]);
+
     const pathName = window.location.pathname;
     let params = (new URL(document.location)).searchParams;
     let searchQuery = params.get("q");
@@ -91,6 +95,28 @@ function ProductGrid({title, categoryArray}) {
                 😭 </div> : productCardsArray
     }
 
+    function renderPaginationControls() {
+        return !pathName.includes('home') &&
+            <div className={styles.paginationController}>
+                {currentPage !== 1 &&
+                    <div className={styles.paginationElement} onClick={() => {
+                        handleClick(currentPage - 1)
+                    }}>
+                        <i className={`fa fa-arrow-left`}/>
+                        Previous Page
+                    </div>
+                }
+                {products.length % pageLimit === 0 &&
+                    <div className={styles.paginationElement} onClick={() => {
+                        handleClick(currentPage + 1)
+                    }}>
+                        <i className={`fa fa-arrow-right`}/>
+                        Next Page
+                    </div>
+                }
+            </div>
+    }
+
     return (
         <>
             {
@@ -98,63 +124,48 @@ function ProductGrid({title, categoryArray}) {
                     <LoadingComponent data={data}/>
                     :
                     <>
+
+                        {!pathName.includes('home') &&
+                            <Sidebar
+                                categoryArray={categoryArray}
+                                setCategoryArray={setCategoryArray}
+                            />
+                        }
+
                         <div className={styles.productGridContainer}>
                             <div className={styles.subtitle}>
-                                <h2>{title}</h2>
+                                <h2>
+                                    {
+                                        pathName === '/home' ?
+                                            'Featured Products' :
+                                            'All Products'
+                                    }
+                                </h2>
                             </div>
                             {renderProductCards()}
                         </div>
 
                         <div style={{margin: 'auto', width: '0px'}}>
-                            {pathName === '/home' ?
-                                <Link to="/products" style={{width: '100px'}}>
-                                    <div className='buttonContainer'>
-                                        <button>
-                                            View all products
-                                        </button>
-                                    </div>
-                                </Link>
-                                :
-                                <Link to="/home">
-                                    <div className='buttonContainer'>
-                                        <button>
-                                            Return to homescreen
-                                        </button>
-                                    </div>
-                                </Link>
-                            }
+                            <Link to={pathName === '/home' ? "/products" : '/home'}
+                                  style={{width: '100px'}}>
+                                <div className='buttonContainer'>
+                                    <button>
+                                        {
+                                            pathName === '/home' ?
+                                                'View all products' :
+                                                ' Return to homescreen'
+                                        }
+                                    </button>
+                                </div>
+                            </Link>
                         </div>
 
-                        {pathName.includes('products') &&
-                            <div className={styles.paginationController}>
-                                {currentPage !== 1 &&
-                                    <div className={styles.paginationElement} onClick={() => {
-                                        handleClick(currentPage - 1)
-                                    }}>
-                                        <i className={`fa fa-arrow-left`}/>
-                                        Previous Page
-                                    </div>
-                                }
-                                {products.length % pageLimit === 0 &&
-                                    <div className={styles.paginationElement} onClick={() => {
-                                        handleClick(currentPage + 1)
-                                    }}>
-                                        <i className={`fa fa-arrow-right`}/>
-                                        Next Page
-                                    </div>
-                                }
-                            </div>
-                        }
+                        {renderPaginationControls()}
 
                     </>
             }
         </>
     );
 }
-
-ProductGrid.propTypes = {
-    title: PropTypes.string.isRequired,
-    categoryArray: PropTypes.array,
-};
 
 export default ProductGrid;
