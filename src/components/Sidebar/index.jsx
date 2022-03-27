@@ -9,10 +9,10 @@ function Sidebar({categoryArray, setCategoryArray}) {
 
     function setCategoryFromQuery() {
         let params = (new URL(document.location)).searchParams;
-        let query = params.get("category");
-        console.log(query)
-        if (query)
-            {return setCategoryArray([...categoryArray, query.toLowerCase()])}
+        let categoryQuery = params.get("category");
+
+        if (categoryQuery)
+            {return setCategoryArray([...categoryArray, categoryQuery.toLowerCase()])}
         return true
     }
 
