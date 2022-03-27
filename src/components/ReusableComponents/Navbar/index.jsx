@@ -49,7 +49,9 @@ function Navbar() {
                         </button>
                     </div>
 
-                    <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
+                    <Link to="/cart">
+                        <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
+                    </Link>
 
                 </div>
             </nav>
