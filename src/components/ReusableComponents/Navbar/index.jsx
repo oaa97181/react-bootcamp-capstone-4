@@ -7,12 +7,10 @@ function Navbar() {
 
     const history = useHistory();
     const redirectToSearch = () => {
-        console.log(textInput.current.value)
         history.push(`/search?q=${textInput.current.value}`);
     };
 
     let textInput = createRef();
-
 
     return (
         <>
@@ -28,15 +26,20 @@ function Navbar() {
                     </Link>
 
                     <div className={styles.searchContainer}>
-
                         <input
                             className={styles.searchInput}
                             placeholder="Type something..."
                             ref={textInput}
+                            onKeyPress={event => {
+                                if (event.key === 'Enter') {
+                                    redirectToSearch()
+                                }
+                            }}
                         />
                         <label className={`fa fa-magnifying-glass fa-sm ${styles.searchIcon}`}/>
 
                         <button
+                            type='submit'
                             className={styles.searchButton}
                             onClick={() => {
                                 redirectToSearch()
@@ -44,7 +47,6 @@ function Navbar() {
                         >
                             Search!
                         </button>
-
                     </div>
 
                     <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>

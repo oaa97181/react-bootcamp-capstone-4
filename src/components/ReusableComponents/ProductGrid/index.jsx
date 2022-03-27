@@ -4,56 +4,65 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
+import Sidebar from "../../Sidebar";
 
 
-function ProductGrid({title, categoryArray}) {
+function ProductGrid() {
+
+    const [categoryArray, setCategoryArray] = useState([]);
+
     const pathName = window.location.pathname;
     let params = (new URL(document.location)).searchParams;
-    let query = params.get("q");
+    let searchQuery = params.get("q");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
-    const allProductsPageLimit =
-        pathName.includes('products') ? 12 : pathName.includes('home') ? 16 : 20
+    const pageLimit =
+        pathName.includes('products') ? 12 : 16
 
     function handleClick(page) {
         return setCurrentPage(page === 0 ? 1 : page)
     }
 
     let paramsArray = [
-        'product',
-        pathName === '/home' ? 16 : pathName === '/products' ? 30 : 20,
+        pathName === '/home' ? 16 : 100,
         pathName === '/home' ? 'Featured' : '',
-        '',
-        pathName === '/search' ? query : '',
     ]
 
     let {data, isLoading} = useWizelineData(
-        paramsArray[0], paramsArray[1], paramsArray[2], paramsArray[3], paramsArray[4]);
-    console.log(data)
+        'product', paramsArray[0], paramsArray[1], '');
+    // console.log(data)
+
+    const paginateArray = useCallback(
+        (array) => {
+            return array.slice(
+                currentPage * pageLimit -
+                pageLimit, pageLimit * currentPage)
+
+        },
+        [currentPage, pageLimit]
+    );
 
     useEffect(() => {
-        if ((data?.results?.length > 0)) {
-            return setProducts(data.results.slice(
-                0, allProductsPageLimit))
-        }
-    }, [allProductsPageLimit, data]);
-
-
-    useEffect(() => {
-        if (products.length > 0) {
-            if (categoryArray?.length >= 1) {
-                return setProducts(data.results.filter
-                (product => categoryArray.includes(product.data.category.slug)))
+        if (data?.results?.length > 0) {
+            if (categoryArray && categoryArray.length >= 1) {
+                return setProducts(paginateArray(data.results.filter(product =>
+                    categoryArray.includes(product.data.category.slug))))
             }
-            return setProducts(
-                [...data.results.slice(
-                    currentPage * allProductsPageLimit -
-                    allProductsPageLimit, allProductsPageLimit * currentPage
-                )])
+
+            if (searchQuery && searchQuery !== '') {
+                return setProducts(paginateArray(data.results.filter(product =>
+                    product.data.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                )))
+            } else if (searchQuery === '') {
+                return setProducts(paginateArray([...data.results]))
+            }
+
+            return setProducts(paginateArray([...data.results]))
         }
-    }, [allProductsPageLimit, categoryArray, currentPage, data.results, products.length]);
+    }, [categoryArray, searchQuery, data.results, paginateArray]);
+
 
     function renderProductCards() {
         let productCardsArray = products.map((product) => {
@@ -86,68 +95,77 @@ function ProductGrid({title, categoryArray}) {
                 😭 </div> : productCardsArray
     }
 
+    function renderPaginationControls() {
+        return !pathName.includes('home') &&
+            <div className={styles.paginationController}>
+                {currentPage !== 1 &&
+                    <div className={styles.paginationElement} onClick={() => {
+                        handleClick(currentPage - 1)
+                    }}>
+                        <i className={`fa fa-arrow-left`}/>
+                        Previous Page
+                    </div>
+                }
+                {products.length % pageLimit === 0 &&
+                    <div className={styles.paginationElement} onClick={() => {
+                        handleClick(currentPage + 1)
+                    }}>
+                        <i className={`fa fa-arrow-right`}/>
+                        Next Page
+                    </div>
+                }
+            </div>
+    }
+
     return (
         <>
             {
                 isLoading ?
                     <LoadingComponent data={data}/>
                     :
-                    <>
-                        <div className={styles.productGridContainer}>
+                    <div className={styles.productGridContainer}>
+
+                        {!pathName.includes('home') &&
+                            <Sidebar
+                                categoryArray={categoryArray}
+                                setCategoryArray={setCategoryArray}
+                            />
+                        }
+
+                        <div className={styles.productGridSubContainer}>
                             <div className={styles.subtitle}>
-                                <h2>{title}</h2>
+                                <h2>
+                                    {
+                                        pathName === '/home' ?
+                                            'Featured Products' :
+                                            'All Products'
+                                    }
+                                </h2>
                             </div>
                             {renderProductCards()}
                         </div>
 
-                        <div className='buttonContainer'>
-                            {pathName === '/home' ?
-                                <button>
-                                    <Link to="/products">
-                                        View all products
-                                    </Link>
-                                </button>
-                                :
-                                <button>
-                                    <Link to="/home">
-                                        Return to homescreen
-                                    </Link>
-                                </button>
-                            }
+                        <div style={{margin: 'auto', width: '0px'}}>
+                            <Link to={pathName === '/home' ? "/products" : '/home'}
+                                  style={{width: '100px'}}>
+                                <div className='buttonContainer'>
+                                    <button>
+                                        {
+                                            pathName === '/home' ?
+                                                'View all products' :
+                                                ' Return to homescreen'
+                                        }
+                                    </button>
+                                </div>
+                            </Link>
                         </div>
 
-                        {
-                            (pathName.includes('products') || pathName.includes('search')) &&
+                        {renderPaginationControls()}
 
-                            <div className={styles.paginationController}>
-                                {currentPage !== 1 &&
-                                    <div className={styles.paginationElement} onClick={() => {
-                                        handleClick(currentPage - 1)
-                                    }}>
-                                        <i className={`fa fa-arrow-left`}/>
-                                        Previous Page
-                                    </div>
-                                }
-                                {products.length % allProductsPageLimit === 0 &&
-                                    <div className={styles.paginationElement} onClick={() => {
-                                        handleClick(currentPage + 1)
-                                    }}>
-                                        <i className={`fa fa-arrow-right`}/>
-                                        Next Page
-                                    </div>
-                                }
-                            </div>
-
-                        }
-                    </>
+                    </div>
             }
         </>
     );
 }
-
-ProductGrid.propTypes = {
-    title: PropTypes.string.isRequired,
-    categoryArray: PropTypes.array,
-};
 
 export default ProductGrid;

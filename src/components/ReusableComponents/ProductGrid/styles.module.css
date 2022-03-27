@@ -1,4 +1,9 @@
-.productGridContainer {
+.productGridContainer{
+        display: flex;
+    flex-direction: column;
+}
+
+.productGridSubContainer {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
