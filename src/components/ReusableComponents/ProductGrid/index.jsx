@@ -11,7 +11,7 @@ function ProductGrid({title, categoryArray}) {
     const pathName = window.location.pathname;
     let params = (new URL(document.location)).searchParams;
     let query = params.get("q");
-    console.log('query',query)
+    console.log('query', query)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
@@ -101,19 +101,23 @@ function ProductGrid({title, categoryArray}) {
                             {renderProductCards()}
                         </div>
 
-                        <div className='buttonContainer'>
+                        <div style={{margin: 'auto', width: '0px'}}>
                             {pathName === '/home' ?
-                                <button>
-                                    <Link to="/products">
-                                        View all products
-                                    </Link>
-                                </button>
+                                <Link to="/products" style={{width: '100px'}}>
+                                    <div className='buttonContainer'>
+                                        <button>
+                                            View all products
+                                        </button>
+                                    </div>
+                                </Link>
                                 :
-                                <button>
-                                    <Link to="/home">
-                                        Return to homescreen
-                                    </Link>
-                                </button>
+                                <Link to="/home">
+                                    <div className='buttonContainer'>
+                                        <button>
+                                            Return to homescreen
+                                        </button>
+                                    </div>
+                                </Link>
                             }
                         </div>
 
