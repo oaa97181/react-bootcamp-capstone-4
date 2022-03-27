@@ -37,7 +37,7 @@ function Sidebar({categoryArray, setCategoryArray}) {
     }
 
     function openSidebar() {
-        document.getElementById("sidebar-container").style.display = "block";
+        document.getElementById("sidebar-container").style.display = "flex";
         document.getElementById("sidebar-button").style.display = "none";
 
     }
@@ -81,7 +81,7 @@ function Sidebar({categoryArray, setCategoryArray}) {
                         })}
                         {
                             categoryArray.length >= 1 &&
-                            <div className="buttonContainer">
+                            <div className="buttonContainer" style={{padding: '0'}}>
                                 <button
                                     onClick={() => {
                                         clearFilters()

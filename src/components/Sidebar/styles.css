@@ -15,7 +15,6 @@
 .close-button {
     background-color: inherit;
     cursor: pointer;
-    width: 100%;
     padding: 8px 16px;
     text-align: left;
     border: none;
@@ -23,10 +22,11 @@
 }
 
 .sidebar-container {
+    align-items: center;
+    flex-direction: column;
     display: none;
-    border-right: 1px solid #ccc !important;
-    height: 100%;
-    width: 200px;
+    border-bottom: 1px solid #ccc !important;
+    width: 100%;
     background-color: #fff;
-    position: fixed !important;
+
 }

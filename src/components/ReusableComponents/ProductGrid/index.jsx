@@ -123,7 +123,7 @@ function ProductGrid() {
                 isLoading ?
                     <LoadingComponent data={data}/>
                     :
-                    <>
+                    <div className={styles.productGridContainer}>
 
                         {!pathName.includes('home') &&
                             <Sidebar
@@ -132,7 +132,7 @@ function ProductGrid() {
                             />
                         }
 
-                        <div className={styles.productGridContainer}>
+                        <div className={styles.productGridSubContainer}>
                             <div className={styles.subtitle}>
                                 <h2>
                                     {
@@ -162,7 +162,7 @@ function ProductGrid() {
 
                         {renderPaginationControls()}
 
-                    </>
+                    </div>
             }
         </>
     );
