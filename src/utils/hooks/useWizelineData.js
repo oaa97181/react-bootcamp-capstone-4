@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {API_BASE_URL} from '../constants';
 import {useLatestAPI} from './useLatestAPI';
 
-export function useWizelineData(type, pageSize, tags, productId, searchTerm) {
+export function useWizelineData(type, pageSize, tags, productId) {
     const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI();
     const [data, setData] = useState(() => ({
         data: {},
@@ -13,9 +13,6 @@ export function useWizelineData(type, pageSize, tags, productId, searchTerm) {
     if (productId) {
         console.log('productId in useWizelineData', productId)
         replacedURL = `[[at(document.id, "${productId}")]]`
-    } else if (searchTerm) {
-        console.log('searchTerm in useWizelineData', searchTerm)
-        replacedURL = `[[at(document.type, "${type}")]] [[fulltext(document, "${searchTerm}")]]`
     } else if(tags) {
         console.log('tags in useWizelineData', tags)
         replacedURL = `[[at(document.type, "${type}")]] [[at(document.tags, "${tags}")]]`
