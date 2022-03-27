@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 
 function ProductGrid({title, categoryArray}) {
@@ -30,27 +30,35 @@ function ProductGrid({title, categoryArray}) {
         'product', paramsArray[0], paramsArray[1], '');
     // console.log(data)
 
+    const paginateArray = useCallback(
+        (array) => {
+            return array.slice(
+                currentPage * pageLimit -
+                pageLimit, pageLimit * currentPage)
+
+        },
+        [currentPage, pageLimit]
+    );
+
     useEffect(() => {
         if (data?.results?.length > 0) {
             if (categoryArray && categoryArray.length >= 1) {
-                return setProducts(data.results.filter(product =>
-                    categoryArray.includes(product.data.category.slug)))
+                return setProducts(paginateArray(data.results.filter(product =>
+                    categoryArray.includes(product.data.category.slug))))
             }
+
             if (searchQuery && searchQuery !== '') {
-                return setProducts(data.results.filter(product =>
+                return setProducts(paginateArray(data.results.filter(product =>
                     product.data.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
-                ))
+                )))
             } else if (searchQuery === '') {
-                return setProducts([...data.results])
+                return setProducts(paginateArray([...data.results]))
             }
-            return setProducts(
-                [...data.results.slice(
-                    currentPage * pageLimit -
-                    pageLimit, pageLimit * currentPage
-                )])
+
+            return setProducts(paginateArray([...data.results]))
         }
-    }, [pageLimit, categoryArray, currentPage, products.length,
-        searchQuery, data.results]);
+    }, [categoryArray, searchQuery, data.results, paginateArray]);
+
 
     function renderProductCards() {
         let productCardsArray = products.map((product) => {
