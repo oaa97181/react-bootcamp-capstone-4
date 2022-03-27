@@ -1,24 +1,29 @@
 import "./styles.css";
 import PropTypes from "prop-types";
 import {useWizelineData} from "../../utils/hooks/useWizelineData";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 
 function Sidebar({categoryArray, setCategoryArray}) {
 
     const {data, isLoading} = useWizelineData('category', 30);
 
-    function setCategoryFromQuery() {
-        let params = (new URL(document.location)).searchParams;
-        let categoryQuery = params.get("category");
+    const setCategoryFromQuery = useCallback(
+        () => {
+            let params = (new URL(document.location)).searchParams;
+            let categoryQuery = params.get("category");
 
-        if (categoryQuery)
-            {return setCategoryArray([...categoryArray, categoryQuery.toLowerCase()])}
-        return true
-    }
+            if (categoryQuery) {
+                return setCategoryArray([categoryQuery.toLowerCase()])
+            }
+            return true
+
+        },
+        [setCategoryArray]
+    );
 
     useEffect(() => {
         setCategoryFromQuery()
-    }, []);
+    }, [setCategoryFromQuery]);
 
 
     function handleChange(e, value) {
