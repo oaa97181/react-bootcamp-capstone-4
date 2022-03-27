@@ -11,21 +11,21 @@ export function useWizelineData(type, pageSize, tags, productId, searchTerm) {
 
     let replacedURL = ''
     if (productId) {
-        console.log('productId', productId)
+        console.log('productId in useWizelineData', productId)
         replacedURL = `[[at(document.id, "${productId}")]]`
     } else if (searchTerm) {
-        console.log('searchTerm', searchTerm)
+        console.log('searchTerm in useWizelineData', searchTerm)
         replacedURL = `[[at(document.type, "${type}")]] [[fulltext(document, "${searchTerm}")]]`
     } else if(tags) {
-        console.log('tags', tags)
+        console.log('tags in useWizelineData', tags)
         replacedURL = `[[at(document.type, "${type}")]] [[at(document.tags, "${tags}")]]`
     } else{
         replacedURL = `[[at(document.type, "${type}")]]`
     }
 
-    console.log(`${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-        replacedURL
-    )}&lang=en-us&pageSize=${pageSize}`)
+    // console.log(`${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
+    //     replacedURL
+    // )}&lang=en-us&pageSize=${pageSize}`)
 
     useEffect(() => {
         if (!apiRef || isApiMetadataLoading) {

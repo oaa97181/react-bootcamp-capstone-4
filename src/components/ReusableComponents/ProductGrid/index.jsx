@@ -11,6 +11,7 @@ function ProductGrid({title, categoryArray}) {
     const pathName = window.location.pathname;
     let params = (new URL(document.location)).searchParams;
     let query = params.get("q");
+    console.log('query',query)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
@@ -26,12 +27,12 @@ function ProductGrid({title, categoryArray}) {
         pathName === '/home' ? 16 : pathName === '/products' ? 30 : 20,
         pathName === '/home' ? 'Featured' : '',
         '',
-        pathName === '/search' ? query : '',
+        // pathName === '/search' ? query : '',
     ]
 
     let {data, isLoading} = useWizelineData(
         paramsArray[0], paramsArray[1], paramsArray[2], paramsArray[3], paramsArray[4]);
-    console.log(data)
+    // console.log(data)
 
     useEffect(() => {
         if ((data?.results?.length > 0)) {
