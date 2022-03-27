@@ -10,51 +10,47 @@ import {useEffect, useState} from "react";
 function ProductGrid({title, categoryArray}) {
     const pathName = window.location.pathname;
     let params = (new URL(document.location)).searchParams;
-    let query = params.get("q");
-    console.log('query', query)
+    let searchQuery = params.get("q");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
-    const allProductsPageLimit =
-        pathName.includes('products') ? 12 : pathName.includes('home') ? 16 : 20
+    const pageLimit =
+        pathName.includes('products') ? 12 : 16
 
     function handleClick(page) {
         return setCurrentPage(page === 0 ? 1 : page)
     }
 
     let paramsArray = [
-        'product',
-        pathName === '/home' ? 16 : pathName === '/products' ? 30 : 20,
+        pathName === '/home' ? 16 : 100,
         pathName === '/home' ? 'Featured' : '',
-        '',
-        // pathName === '/search' ? query : '',
     ]
 
     let {data, isLoading} = useWizelineData(
-        paramsArray[0], paramsArray[1], paramsArray[2], paramsArray[3], paramsArray[4]);
+        'product', paramsArray[0], paramsArray[1], '');
     // console.log(data)
 
     useEffect(() => {
-        if ((data?.results?.length > 0)) {
-            return setProducts(data.results.slice(
-                0, allProductsPageLimit))
-        }
-    }, [allProductsPageLimit, data]);
-
-
-    useEffect(() => {
-        if (products.length > 0) {
-            if (categoryArray?.length >= 1) {
-                return setProducts(data.results.filter
-                (product => categoryArray.includes(product.data.category.slug)))
+        if (data?.results?.length > 0) {
+            if (categoryArray && categoryArray.length >= 1) {
+                return setProducts(data.results.filter(product =>
+                    categoryArray.includes(product.data.category.slug)))
+            }
+            if (searchQuery && searchQuery !== '') {
+                return setProducts(data.results.filter(product =>
+                    product.data.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                ))
+            } else if (searchQuery === '') {
+                return setProducts([...data.results])
             }
             return setProducts(
                 [...data.results.slice(
-                    currentPage * allProductsPageLimit -
-                    allProductsPageLimit, allProductsPageLimit * currentPage
+                    currentPage * pageLimit -
+                    pageLimit, pageLimit * currentPage
                 )])
         }
-    }, [allProductsPageLimit, categoryArray, currentPage, data.results, products.length]);
+    }, [pageLimit, categoryArray, currentPage, products.length,
+        searchQuery, data.results]);
 
     function renderProductCards() {
         let productCardsArray = products.map((product) => {
@@ -121,9 +117,7 @@ function ProductGrid({title, categoryArray}) {
                             }
                         </div>
 
-                        {
-                            (pathName.includes('products') || pathName.includes('search')) &&
-
+                        {pathName.includes('products') &&
                             <div className={styles.paginationController}>
                                 {currentPage !== 1 &&
                                     <div className={styles.paginationElement} onClick={() => {
@@ -133,7 +127,7 @@ function ProductGrid({title, categoryArray}) {
                                         Previous Page
                                     </div>
                                 }
-                                {products.length % allProductsPageLimit === 0 &&
+                                {products.length % pageLimit === 0 &&
                                     <div className={styles.paginationElement} onClick={() => {
                                         handleClick(currentPage + 1)
                                     }}>
@@ -142,8 +136,8 @@ function ProductGrid({title, categoryArray}) {
                                     </div>
                                 }
                             </div>
-
                         }
+
                     </>
             }
         </>
