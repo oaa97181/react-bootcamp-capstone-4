@@ -11,18 +11,12 @@ export function useWizelineData(type, pageSize, tags, productId) {
 
     let replacedURL = ''
     if (productId) {
-        console.log('productId in useWizelineData', productId)
         replacedURL = `[[at(document.id, "${productId}")]]`
     } else if(tags) {
-        console.log('tags in useWizelineData', tags)
         replacedURL = `[[at(document.type, "${type}")]] [[at(document.tags, "${tags}")]]`
     } else{
         replacedURL = `[[at(document.type, "${type}")]]`
     }
-
-    // console.log(`${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-    //     replacedURL
-    // )}&lang=en-us&pageSize=${pageSize}`)
 
     useEffect(() => {
         if (!apiRef || isApiMetadataLoading) {
@@ -44,9 +38,7 @@ export function useWizelineData(type, pageSize, tags, productId) {
                     }
                 );
                 const data = await response.json();
-
-                // console.log('data in useWizelineData w/ type ' + type, data)
-
+                
                 setData({data, isLoading: false});
             } catch (err) {
                 setData({data: {}, isLoading: false});
