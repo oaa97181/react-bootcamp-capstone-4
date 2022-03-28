@@ -7,9 +7,9 @@ export const CartReducer = (state, action) => {
             };
 
         case "UPDATE_PRODUCT":
-            let index =
-                state.products.findIndex((
-                    product) => product.singleProduct.sku === action.payload.singleProduct.sku)
+            let index = state.products.findIndex((product) =>
+                product.singleProduct.sku === action.payload.singleProduct.sku)
+
             state.products[index].units = action.payload.NEWunits
             return {...state};
 
@@ -17,7 +17,7 @@ export const CartReducer = (state, action) => {
             return {
                 ...state,
                 products: state.products.filter(
-                    (product) => product.id !== action.payload.id
+                    (product) => product.singleProduct.sku !== action.payload.singleProduct.sku
                 ),
             };
 
