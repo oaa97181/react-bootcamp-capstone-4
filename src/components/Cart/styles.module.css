@@ -1,0 +1,138 @@
+.CartContainer {
+    padding: 25px;
+}
+
+.Header {
+    margin: auto;
+    width: 90%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Heading {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2F3841;
+}
+
+.Action {
+    font-size: 14px;
+    font-weight: 600;
+    color: #E44C4C;
+    cursor: pointer;
+    border-bottom: 1px solid #E44C4C;
+}
+
+.CartItems {
+    margin: auto;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imagebox {
+    width: 15%;
+    text-align: center;
+}
+
+.image {
+    height: 120px;
+}
+
+.about {
+    height: 100%;
+    width: 24%;
+}
+
+.title {
+    padding-top: 10px;
+    font-size: 2em;
+    font-weight: 800;
+    color: #202020;
+}
+
+.counter {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.count {
+    font-size: 20px;
+    font-weight: 600;
+    color: #202020;
+}
+
+.prices {
+    height: 100%;
+    text-align: right;
+}
+
+.amount {
+    padding-top: 20px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #202020;
+}
+
+.remove {
+    padding-top: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #E44C4C;
+    cursor: pointer;
+}
+
+hr {
+    width: 66%;
+    float: right;
+    margin-right: 5%;
+}
+
+.checkout {
+    float: right;
+    margin-right: 5%;
+    width: 28%;
+}
+
+.total {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Subtotal {
+    font-size: 22px;
+    font-weight: 700;
+    color: #202020;
+}
+
+.items {
+    font-size: 16px;
+    font-weight: 500;
+    color: #909090;
+    line-height: 10px;
+}
+
+.totalamount {
+    font-size: 36px;
+    font-weight: 900;
+    color: #202020;
+}
+
+@media (max-width: 800px) {
+
+    .title {
+        font-size: 1em;
+    }
+
+    .image {
+        height: 88px;
+    }
+}
