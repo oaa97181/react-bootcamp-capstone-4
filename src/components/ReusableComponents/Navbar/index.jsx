@@ -1,9 +1,12 @@
 import styles from "./styles.module.css";
 import {Link, useHistory} from "react-router-dom";
-import {createRef} from "react";
+import {createRef, useContext} from "react";
+import CartContext from "../../../contexts/CartContext";
+
 
 
 function Navbar() {
+    const {state} = useContext(CartContext);
 
     const history = useHistory();
     const redirectToSearch = () => {
@@ -50,6 +53,7 @@ function Navbar() {
                     </div>
 
                     <Link to="/cart">
+                        <div className={styles.badgeCartCounter}>{state.products.length}</div>
                         <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
                     </Link>
 
