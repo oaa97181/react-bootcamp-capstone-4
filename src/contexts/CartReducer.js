@@ -5,6 +5,14 @@ export const CartReducer = (state, action) => {
                 ...state,
                 products: state.products.concat(action.payload),
             };
+
+        case "UPDATE_PRODUCT":
+            let index =
+                state.products.findIndex((
+                    product) => product.singleProduct.sku === action.payload.singleProduct.sku)
+            state.products[index].units = action.payload.NEWunits
+            return {...state};
+
         case "REMOVE_FROM_CART":
             return {
                 ...state,
@@ -12,11 +20,13 @@ export const CartReducer = (state, action) => {
                     (product) => product.id !== action.payload.id
                 ),
             };
+
         case "CLEAR_CART":
             return {
                 ...state,
                 products: [],
             };
+
         default:
             return state;
     }
