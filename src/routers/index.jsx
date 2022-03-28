@@ -9,22 +9,29 @@ import Homepage from "../pages/Homepage";
 import ProductList from "../pages/ProductList";
 import ProductDetail from "../pages/ProductDetail";
 import CartPage from "../pages/Cart";
-
+import CartContext from "../contexts/CartContext";
+import {CartReducer} from "../contexts/CartReducer";
+import {useReducer} from "react";
 
 function AppRouter() {
+    const [state, dispatch] = useReducer(CartReducer, {
+        products: [],
+    });
 
     return (
         <Router>
-            <Navbar/>
-            <Switch>
-                <Route path="/home" component={Homepage}/>
-                <Route path='/products' component={ProductList}/>
-                <Route path='/product/:productId' component={ProductDetail}/>
-                <Route path='/search' component={ProductList}/>
-                <Route path='/cart' component={CartPage}/>
-                <Redirect to="/home"/>
-            </Switch>
-            <Footer/>
+            <CartContext.Provider value={{state, dispatch}}>
+                <Navbar/>
+                <Switch>
+                    <Route path="/home" component={Homepage}/>
+                    <Route path='/products' component={ProductList}/>
+                    <Route path='/product/:productId' component={ProductDetail}/>
+                    <Route path='/search' component={ProductList}/>
+                    <Route path='/cart' component={CartPage}/>
+                    <Redirect to="/home"/>
+                </Switch>
+                <Footer/>
+            </CartContext.Provider>
         </Router>
     );
 }
