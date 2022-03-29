@@ -1,13 +1,12 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import CartContext from "../../contexts/CartContext";
 import styles from "./styles.module.css";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 function Cart() {
 
     const {state, dispatch} = useContext(CartContext);
-    console.log(state)
 
     const [totalUnits, setTotalUnits] = useState(
         state?.products.map((product) => {
@@ -19,8 +18,42 @@ function Cart() {
             return parseInt(product.units) * product.singleProduct.price
         }));
 
-    console.log(totalUnits)
-    console.log(totalPrice)
+    const handleInputsChange = (event, product) => {
+        return dispatch({
+            type: "UPDATE_PRODUCT",
+            payload: {
+                singleProduct:
+                product,
+                NEWunits:
+                event.target.value,
+            },
+        });
+    };
+
+    const removeItemFromCart = (event, product) => {
+        return dispatch({
+            type: "REMOVE_FROM_CART",
+            payload: {
+                singleProduct:
+                product,
+            },
+        });
+    };
+
+    const clearCart = () => {
+        return dispatch({
+            type: "CLEAR_CART",
+        });
+    };
+
+    useEffect(() => {
+        setTotalUnits(state?.products.map((product) => {
+            return parseInt(product.units)
+        }))
+        setTotalPrice(state?.products.map((product) => {
+            return parseInt(product.units) * product.singleProduct.price
+        }))
+    }, [state]);
 
     return (
         <>
@@ -29,12 +62,17 @@ function Cart() {
                 <div className={styles.CartContainer}>
                     <div className={styles.Header}>
                         <h3 className={styles.Heading}>Shopping Cart</h3>
-                        {/*TODO clear cart*/}
-                        <h5 className={styles.Action}>Remove all</h5>
+                        <h5
+                            className={styles.Action}
+                            onClick={() => {
+                                clearCart()
+                            }}
+                        >
+                            Remove all
+                        </h5>
                     </div>
 
                     {state.products.map((product) => {
-                        console.log(product)
                         return (
                             <div className={styles.CartItems} key={product.singleProduct.sku}>
                                 <div className={styles.imagebox}>
@@ -48,16 +86,32 @@ function Cart() {
                                 </div>
                                 <div className={styles.counter}>
                                     <div className={styles.count}>
-                                        {/*TODO add input*/}
-                                        {product.units} x ${product.singleProduct.price}
+                                        <input
+                                            type="number"
+                                            className={styles.quantityInput}
+                                            min={1}
+                                            max={product.singleProduct.stock}
+                                            defaultValue={product.units}
+                                            onChange={(event) => {
+                                                handleInputsChange(event, product.singleProduct)
+                                            }}
+                                        />
+                                        x ${product.singleProduct.price}
                                     </div>
                                 </div>
                                 <div className={styles.prices}>
                                     <div className={styles.amount}>
                                         ${product.singleProduct.price * product.units}
                                     </div>
-                                    {/*TODO remove whole item*/}
-                                    <div className={styles.remove}><u>Remove</u></div>
+
+                                    <div
+                                        className={styles.remove}
+                                        onClick={(event) => {
+                                            removeItemFromCart(event, product.singleProduct)
+                                        }}
+                                    >
+                                        <u>Remove</u>
+                                    </div>
                                 </div>
                             </div>
 
@@ -80,15 +134,15 @@ function Cart() {
                         </div>
                         <Link to='/checkout'>
                             <div className='buttonContainer'>
-                                <button  style={{width: '100%', borderRadius: '40px'}}>
-                                    Checkout
+                                <button style={{width: '100%', borderRadius: '40px'}}>
+                                    Proceed to checkout
                                 </button>
                             </div>
                         </Link>
                     </div>
                 </div>
                 :
-                <p>Cart is empty :(</p>
+                <Redirect to='/'/>
             }
 
         </>
