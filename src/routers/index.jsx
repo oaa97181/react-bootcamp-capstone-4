@@ -9,6 +9,7 @@ import Homepage from "../pages/Homepage";
 import ProductList from "../pages/ProductList";
 import ProductDetail from "../pages/ProductDetail";
 import CartPage from "../pages/Cart";
+import CheckoutPage from "../pages/Checkout";
 import CartContext from "../contexts/CartContext";
 import {CartReducer} from "../contexts/CartReducer";
 import {useReducer} from "react";
@@ -28,6 +29,7 @@ function AppRouter() {
                     <Route path='/product/:productId' component={ProductDetail}/>
                     <Route path='/search' component={ProductList}/>
                     <Route path='/cart' component={CartPage}/>
+                    <Route path='/checkout' component={CheckoutPage}/>
                     <Redirect to="/home"/>
                 </Switch>
                 <Footer/>
