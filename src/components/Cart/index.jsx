@@ -1,7 +1,8 @@
 import {useContext, useEffect, useState} from "react";
 import CartContext from "../../contexts/CartContext";
 import styles from "./styles.module.css";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
+import RedirectComponent from "../ReusableComponents/RedirectComponent";
 
 
 function Cart() {
@@ -54,11 +55,6 @@ function Cart() {
             return parseInt(product.units) * product.singleProduct.price
         }))
     }, [state]);
-
-    function cartIsEmpty() {
-        alert('add items to cart')
-        return <Redirect to='/'/>
-    }
 
     return (
         <>
@@ -147,7 +143,7 @@ function Cart() {
                     </div>
                 </div>
                 :
-                cartIsEmpty()
+                <RedirectComponent/>
             }
 
         </>
