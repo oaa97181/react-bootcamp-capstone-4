@@ -55,6 +55,11 @@ function Cart() {
         }))
     }, [state]);
 
+    function cartIsEmpty() {
+        alert('add items to cart')
+        return <Redirect to='/'/>
+    }
+
     return (
         <>
             {state.products.length >= 1 ?
@@ -142,7 +147,7 @@ function Cart() {
                     </div>
                 </div>
                 :
-                <Redirect to='/'/>
+                cartIsEmpty()
             }
 
         </>
