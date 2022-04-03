@@ -119,7 +119,7 @@ function Cart() {
 
                     })}
 
-                    <hr/>
+                    <hr className={styles.line}/>
                     <div className={styles.checkout}>
                         <div className={styles.total}>
                             <div>
