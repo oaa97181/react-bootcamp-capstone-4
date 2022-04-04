@@ -4,7 +4,6 @@ import {createRef, useContext} from "react";
 import CartContext from "../../../contexts/CartContext";
 
 
-
 function Navbar() {
     const {state} = useContext(CartContext);
 
@@ -14,6 +13,11 @@ function Navbar() {
     };
 
     let textInput = createRef();
+
+    const totalProducts =
+        state?.products.map((product) => {
+            return parseInt(product.units)
+        })
 
     return (
         <>
@@ -53,7 +57,9 @@ function Navbar() {
                     </div>
 
                     <Link to="/cart">
-                        <div className={styles.badgeCartCounter}>{state.products.length}</div>
+                        <div className={styles.badgeCartCounter}>
+                            {totalProducts.length>=1 && totalProducts.reduce((a, b) => a + b)}
+                        </div>
                         <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
                     </Link>
 
