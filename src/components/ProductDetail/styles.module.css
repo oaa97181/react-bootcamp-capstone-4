@@ -16,6 +16,7 @@
 
     .productImageContainer {
         width: 100% !important;
+        display: inline-block !important;
     }
 }
 

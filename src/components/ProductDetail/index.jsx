@@ -2,11 +2,25 @@ import styles from "./styles.module.css";
 import {useWizelineData} from "../../utils/hooks/useWizelineData";
 import LoadingComponent from "../../components/ReusableComponents/LoadingComponent";
 import SlideShow from 'react-image-show';
+import {createRef, useContext, useState} from "react";
+import CartContext from "../../contexts/CartContext";
 
 function ProductDetailComponent() {
-
     const {data, isLoading} =
         useWizelineData('', '1', '', window.location.pathname.split('/')[2]);
+
+    const {state, dispatch} = useContext(CartContext);
+
+    const [inputsValue, setInputsValue] = useState(1);
+
+    let productQuantityInput = createRef();
+
+
+    const handleInputsChange = event => {
+        let {value, min, max} = event.target;
+        value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+        setInputsValue(value);
+    };
 
     return (
         <>
@@ -26,11 +40,13 @@ function ProductDetailComponent() {
                                         })}
                                     width="600px"
                                     imagesWidth="600px"
-                                    imagesHeight="650px"
-                                    imagesHeightMobile="56vw"
-                                    thumbnailsWidth="920px"
+                                    imagesHeight="600px"
+                                    imagesHeightMobile="50vw"
+                                    thumbnailsWidth="600px"
                                     thumbnailsHeight="12vw"
-                                    indicators thumbnails fixedImagesHeight
+                                    indicators
+                                    thumbnails
+                                    fixedImagesHeight={true}
                                 />
                             </div>
 
@@ -66,11 +82,52 @@ function ProductDetailComponent() {
                                 <div className={styles.productPrice}>
                                     <span>${data.results[0].data.price}</span>
                                     <div className='buttonContainer'>
-                                        <input type="number" defaultValue={1}
-                                               className={styles.quantityInput} min="1" max="100"/>
-                                        <button>
-                                            Add to cart
-                                        </button>
+                                        <input
+                                            ref={productQuantityInput}
+                                            type="number"
+                                            className={styles.quantityInput}
+                                            min={0}
+                                            max={data.results[0].data.stock}
+                                            value={inputsValue}
+                                            onChange={handleInputsChange}
+                                        />
+
+                                        {data.results[0].data.stock >= 1 &&
+                                            <button
+                                                onClick={() => {
+
+                                                    let productsAreInCartArr =
+                                                        state.products.map((product) => {
+                                                            return (product.singleProduct.sku
+                                                                === data.results[0].data.sku)
+                                                        })
+
+                                                    if (productsAreInCartArr.includes(true)) {
+                                                        dispatch({
+                                                            type: "UPDATE_PRODUCT",
+                                                            payload: {
+                                                                singleProduct:
+                                                                data.results[0].data,
+                                                                NEWunits:
+                                                                productQuantityInput.current.value,
+                                                            },
+                                                        });
+                                                    } else {
+                                                        dispatch({
+                                                            type: "ADD_TO_CART",
+                                                            payload: {
+                                                                singleProduct:
+                                                                data.results[0].data,
+                                                                units:
+                                                                productQuantityInput.current.value,
+                                                            },
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                Add to cart
+                                            </button>
+                                        }
                                     </div>
                                 </div>
 

@@ -1,9 +1,11 @@
 import styles from "./styles.module.css";
 import {Link, useHistory} from "react-router-dom";
-import {createRef} from "react";
+import {createRef, useContext} from "react";
+import CartContext from "../../../contexts/CartContext";
 
 
 function Navbar() {
+    const {state} = useContext(CartContext);
 
     const history = useHistory();
     const redirectToSearch = () => {
@@ -11,6 +13,11 @@ function Navbar() {
     };
 
     let textInput = createRef();
+
+    const totalProducts =
+        state?.products.map((product) => {
+            return parseInt(product.units)
+        })
 
     return (
         <>
@@ -49,7 +56,12 @@ function Navbar() {
                         </button>
                     </div>
 
-                    <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
+                    <Link to="/cart">
+                        <div className={styles.badgeCartCounter}>
+                            {totalProducts.length>=1 && totalProducts.reduce((a, b) => a + b)}
+                        </div>
+                        <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
+                    </Link>
 
                 </div>
             </nav>

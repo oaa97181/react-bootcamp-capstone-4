@@ -54,6 +54,18 @@
     top: calc(60%);
 }
 
+.badgeCartCounter {
+    width: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    background: #cb1b1b;
+    position: absolute;
+    margin-left: 35px;
+}
+
 @media (max-width: 750px) {
     .navContainer {
         flex-direction: column;

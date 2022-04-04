@@ -1,6 +1,5 @@
 import styles from "./styles.module.css";
 import ProductCard from "../ProductCard";
-import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useWizelineData} from "../../../utils/hooks/useWizelineData";
 import LoadingComponent from "../LoadingComponent";
