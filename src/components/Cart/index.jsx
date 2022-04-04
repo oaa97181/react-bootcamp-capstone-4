@@ -42,6 +42,7 @@ function Cart() {
     };
 
     const clearCart = () => {
+        alert('Cart is cleared! :D');
         return dispatch({
             type: "CLEAR_CART",
         });
