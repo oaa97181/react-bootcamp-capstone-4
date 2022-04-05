@@ -20,7 +20,6 @@ function Checkout() {
     }, [state]);
 
 
-
     return (
         <>
             {state.products.length >= 1 ?
@@ -121,7 +120,7 @@ function Checkout() {
                                     <span className="price" style={{color: "black"}}>
                             <i className="fa fa-shopping-cart"/>
                             <b>{state.products.length}</b>
-                        </span>
+                                 </span>
                                 </h4>
                                 {state.products.map((product) => {
                                     return (
@@ -136,7 +135,7 @@ function Checkout() {
                                 <hr className='divider'/>
                                 <p>Total <span className="price" style={{color: "black"}}>
                             <b>${totalPrice.reduce((a, b) => a + b)}</b>
-                        </span>
+                                </span>
                                 </p>
                             </div>
                             <Link to="/cart">
