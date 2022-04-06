@@ -113,6 +113,9 @@ function ProductDetailComponent() {
 
                                         {data.results[0].data.stock >= 1 &&
                                             <button
+                                                disabled={inputsValue ===
+                                                    data.results[0].data.stock &&
+                                                    productIsInCartArray.includes(true)}
                                                 onClick={() => {
 
                                                     if (productIsInCartArray.includes(true)) {
@@ -138,8 +141,14 @@ function ProductDetailComponent() {
                                                     }
                                                 }}
                                             >
-                                                {productIsInCartArray.includes(true) ?
-                                                    'Update cart' : 'Add to cart'}
+                                                {
+                                                    inputsValue ===
+                                                    data.results[0].data.stock &&
+                                                    productIsInCartArray.includes(true)
+                                                        ? "Can't add more than available stock" :
+                                                        productIsInCartArray.includes(true) ?
+                                                            'Update cart' : 'Add to cart'
+                                                }
                                             </button>
                                         }
                                     </div>

@@ -20,6 +20,9 @@ function Cart() {
         }));
 
     const handleInputsChange = (event, product) => {
+        if (event.target.value > product.stock) {
+            return alert('Not enough stock, please choose less units')
+        }
         return dispatch({
             type: "UPDATE_PRODUCT",
             payload: {
