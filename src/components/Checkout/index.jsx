@@ -115,11 +115,11 @@ function Checkout() {
                         </div>
 
                         <div className="col-25">
-                            <div className="container">
+                            <div className="container order-container">
                                 <h4>Cart
                                     <span className="price" style={{color: "black"}}>
                             <i className="fa fa-shopping-cart"/>
-                            <b>{state.products.length}</b>
+                            <b>({state.products.length})</b>
                                  </span>
                                 </h4>
                                 {state.products.map((product) => {
