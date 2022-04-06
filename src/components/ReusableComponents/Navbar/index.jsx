@@ -14,11 +14,6 @@ function Navbar() {
 
     let textInput = createRef();
 
-    const totalProducts =
-        state?.products.map((product) => {
-            return parseInt(product.units)
-        })
-
     return (
         <>
             <nav className={styles.navbar}>
@@ -58,7 +53,7 @@ function Navbar() {
 
                     <Link to="/cart">
                         <div className={styles.badgeCartCounter}>
-                            {totalProducts.length>=1 && totalProducts.reduce((a, b) => a + b)}
+                            {state.products.length}
                         </div>
                         <i className={`fa fa-shopping-cart ${styles.iconsMargin}`}/>
                     </Link>
