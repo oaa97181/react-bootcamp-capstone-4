@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import {useWizelineData} from "../../utils/hooks/useWizelineData";
 import LoadingComponent from "../../components/ReusableComponents/LoadingComponent";
 import SlideShow from 'react-image-show';
-import {createRef, useContext, useState} from "react";
+import {createRef, useContext, useEffect, useState} from "react";
 import CartContext from "../../contexts/CartContext";
 
 function ProductDetailComponent() {
@@ -12,6 +12,7 @@ function ProductDetailComponent() {
     const {state, dispatch} = useContext(CartContext);
 
     const [inputsValue, setInputsValue] = useState(1);
+    const [productIsInCartArray, setproductIsInCartArray] = useState([]);
 
     let productQuantityInput = createRef();
 
@@ -21,6 +22,24 @@ function ProductDetailComponent() {
         value = Math.max(Number(min), Math.min(Number(max), Number(value)));
         setInputsValue(value);
     };
+
+    useEffect(() => {
+        if (state.products.length !== 0 && data.results && data.results.length !== 0) {
+            setproductIsInCartArray(
+                state.products.map((product) => {
+                    return (product.singleProduct.sku
+                        === data.results[0].data.sku)
+                }))
+        }
+    }, [state.products, data.results]);
+
+    useEffect(() => {
+        let indexOfCurrentProduct = productIsInCartArray.indexOf(true)
+        if (indexOfCurrentProduct !== -1) {
+            setInputsValue(state.products[indexOfCurrentProduct].units)
+        }
+    }, [productIsInCartArray]);
+
 
     return (
         <>
@@ -96,13 +115,7 @@ function ProductDetailComponent() {
                                             <button
                                                 onClick={() => {
 
-                                                    let productsAreInCartArr =
-                                                        state.products.map((product) => {
-                                                            return (product.singleProduct.sku
-                                                                === data.results[0].data.sku)
-                                                        })
-
-                                                    if (productsAreInCartArr.includes(true)) {
+                                                    if (productIsInCartArray.includes(true)) {
                                                         dispatch({
                                                             type: "UPDATE_PRODUCT",
                                                             payload: {
@@ -125,7 +138,8 @@ function ProductDetailComponent() {
                                                     }
                                                 }}
                                             >
-                                                Add to cart
+                                                {productIsInCartArray.includes(true) ?
+                                                    'Update cart' : 'Add to cart'}
                                             </button>
                                         }
                                     </div>
