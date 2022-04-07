@@ -1,19 +1,21 @@
+import {add, clear, remove, update} from "./actionTypes";
+
 export const CartReducer = (state, action) => {
     switch (action.type) {
-        case "ADD_TO_CART":
+        case add:
             return {
                 ...state,
                 products: state.products.concat(action.payload),
             };
 
-        case "UPDATE_PRODUCT":
+        case update:
             let index = state.products.findIndex((product) =>
                 product.singleProduct.sku === action.payload.singleProduct.sku)
 
             state.products[index].units = action.payload.NEWunits
             return {...state};
 
-        case "REMOVE_FROM_CART":
+        case remove:
             return {
                 ...state,
                 products: state.products.filter(
@@ -21,7 +23,7 @@ export const CartReducer = (state, action) => {
                 ),
             };
 
-        case "CLEAR_CART":
+        case clear:
             return {
                 ...state,
                 products: [],

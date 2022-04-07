@@ -4,6 +4,7 @@ import LoadingComponent from "../../components/ReusableComponents/LoadingCompone
 import SlideShow from 'react-image-show';
 import {createRef, useContext, useEffect, useState} from "react";
 import CartContext from "../../contexts/CartContext";
+import {add, update} from "../../contexts/actionTypes";
 
 function ProductDetailComponent() {
     const {data, isLoading} =
@@ -120,7 +121,7 @@ function ProductDetailComponent() {
 
                                                     if (productIsInCartArray.includes(true)) {
                                                         dispatch({
-                                                            type: "UPDATE_PRODUCT",
+                                                            type: update,
                                                             payload: {
                                                                 singleProduct:
                                                                 data.results[0].data,
@@ -130,7 +131,7 @@ function ProductDetailComponent() {
                                                         });
                                                     } else {
                                                         dispatch({
-                                                            type: "ADD_TO_CART",
+                                                            type: add,
                                                             payload: {
                                                                 singleProduct:
                                                                 data.results[0].data,
