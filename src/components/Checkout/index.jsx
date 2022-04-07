@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import CartContext from "../../contexts/CartContext";
 import {useContext, useEffect, useState} from "react";
 import RedirectComponent from "../ReusableComponents/RedirectComponent";
+import ErrorBoundary from "../ReusableComponents/ErrorBoundary";
 
 function Checkout() {
 
@@ -145,6 +146,7 @@ function Checkout() {
                                     </button>
                                 </div>
                             </Link>
+
                             <div className='buttonContainer' style={{padding: '10px'}}
                                  onClick={() => {
                                      alert('Checkout logic goes right here')
@@ -153,6 +155,22 @@ function Checkout() {
                                     Place order
                                 </button>
                             </div>
+
+                            <ErrorBoundary>
+                                <div className='buttonContainer'
+                                     style={{padding: '10px'}}
+                                     onClick={() => {
+                                         throw new Error('I crashed!');
+                                     }}
+                                >
+                                    <button className='btn'
+                                            style={{backgroundColor: 'red'}}>
+                                        Press for error boundary
+                                    </button>
+                                </div>
+                            </ErrorBoundary>
+
+
                         </div>
 
                     </div>
