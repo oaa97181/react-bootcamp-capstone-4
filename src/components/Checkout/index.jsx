@@ -34,22 +34,22 @@ function Checkout() {
                                     <div className="row">
                                         <div className="col-50">
                                             <h3>Billing Address</h3>
-                                            <label htmlFor="fname">
+                                            <label className="label" htmlFor="fname">
                                                 <i className={'fa fa-user'}/>
                                                 Full Name</label>
                                             <input type="text" id="fname" name="firstname"
                                                    placeholder="John M. Doe"/>
-                                            <label htmlFor="email">
+                                            <label className="label" htmlFor="email">
                                                 <i className={"fa fa-envelope"}/>
                                                 Email</label>
                                             <input type="text" id="email" name="email"
                                                    placeholder="john@example.com"/>
-                                            <label htmlFor="adr">
+                                            <label className="label" htmlFor="adr">
                                                 <i className={"fa fa-address-card-o"}/>
                                                 Address</label>
                                             <input type="text" id="adr" name="address"
                                                    placeholder="542 W. 15th Street"/>
-                                            <label htmlFor="city">
+                                            <label className="label" htmlFor="city">
                                                 <i className={"fa fa-institution"}/>
                                                 City</label>
                                             <input type="text" id="city" name="city"
@@ -57,12 +57,14 @@ function Checkout() {
 
                                             <div className="row">
                                                 <div className="col-50">
-                                                    <label htmlFor="state">State</label>
+                                                    <label className="label"
+                                                           htmlFor="state">State</label>
                                                     <input type="text" id="state"
                                                            name="state" placeholder="NY"/>
                                                 </div>
                                                 <div className="col-50">
-                                                    <label htmlFor="zip">Zip</label>
+                                                    <label className="label"
+                                                           htmlFor="zip">Zip</label>
                                                     <input type="text" id="zip" name="zip"
                                                            placeholder="10001"/>
                                                 </div>
@@ -71,7 +73,8 @@ function Checkout() {
 
                                         <div className="col-50">
                                             <h3>Payment</h3>
-                                            <label htmlFor="fname">Accepted Cards</label>
+                                            <label className="label" htmlFor="fname">Accepted
+                                                Cards</label>
                                             <div className="icon-container">
                                                 <i className={"fa fa-cc-visa"}
                                                    style={{color: "navy", padding: '0 5px'}}/>
@@ -82,23 +85,28 @@ function Checkout() {
                                                 <i className={"fa fa-cc-discover"}
                                                    style={{color: "orange", padding: '0 5px'}}/>
                                             </div>
-                                            <label htmlFor="cname">Name on Card</label>
+                                            <label className="label" htmlFor="cname">Name on
+                                                Card</label>
                                             <input type="text" id="cname" name="cardname"
                                                    placeholder="John More Doe"/>
-                                            <label htmlFor="ccnum">Credit card number</label>
+                                            <label className="label" htmlFor="ccnum">Credit card
+                                                number</label>
                                             <input type="text" id="ccnum" name="cardnumber"
                                                    placeholder="1111-2222-3333-4444"/>
-                                            <label htmlFor="expmonth">Exp Month</label>
+                                            <label className="label" htmlFor="expmonth">Exp
+                                                Month</label>
                                             <input type="text" id="expmonth" name="expmonth"
                                                    placeholder="September"/>
                                             <div className="row">
                                                 <div className="col-50">
-                                                    <label htmlFor="expyear">Exp Year</label>
+                                                    <label className="label" htmlFor="expyear">Exp
+                                                        Year</label>
                                                     <input type="text" id="expyear"
                                                            name="expyear" placeholder="2018"/>
                                                 </div>
                                                 <div className="col-50">
-                                                    <label htmlFor="cvv">CVV</label>
+                                                    <label className="label"
+                                                           htmlFor="cvv">CVV</label>
                                                     <input type="text" id="cvv" name="cvv"
                                                            placeholder="352"/>
                                                 </div>
