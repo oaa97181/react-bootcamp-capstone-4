@@ -2,8 +2,9 @@ import styles from "./styles.module.css";
 import {useWizelineData} from "../../utils/hooks/useWizelineData";
 import LoadingComponent from "../../components/ReusableComponents/LoadingComponent";
 import SlideShow from 'react-image-show';
-import {createRef, useContext, useState} from "react";
+import {createRef, useContext, useEffect, useState} from "react";
 import CartContext from "../../contexts/CartContext";
+import {add, update} from "../../contexts/actionTypes";
 
 function ProductDetailComponent() {
     const {data, isLoading} =
@@ -12,6 +13,7 @@ function ProductDetailComponent() {
     const {state, dispatch} = useContext(CartContext);
 
     const [inputsValue, setInputsValue] = useState(1);
+    const [productIsInCartArray, setproductIsInCartArray] = useState([]);
 
     let productQuantityInput = createRef();
 
@@ -21,6 +23,24 @@ function ProductDetailComponent() {
         value = Math.max(Number(min), Math.min(Number(max), Number(value)));
         setInputsValue(value);
     };
+
+    useEffect(() => {
+        if (state.products.length !== 0 && data.results && data.results.length !== 0) {
+            setproductIsInCartArray(
+                state.products.map((product) => {
+                    return (product.singleProduct.sku
+                        === data.results[0].data.sku)
+                }))
+        }
+    }, [state.products, data.results]);
+
+    useEffect(() => {
+        let indexOfCurrentProduct = productIsInCartArray.indexOf(true)
+        if (indexOfCurrentProduct !== -1) {
+            setInputsValue(state.products[indexOfCurrentProduct].units)
+        }
+    }, [productIsInCartArray]);
+
 
     return (
         <>
@@ -94,17 +114,14 @@ function ProductDetailComponent() {
 
                                         {data.results[0].data.stock >= 1 &&
                                             <button
+                                                disabled={inputsValue ===
+                                                    data.results[0].data.stock &&
+                                                    productIsInCartArray.includes(true)}
                                                 onClick={() => {
 
-                                                    let productsAreInCartArr =
-                                                        state.products.map((product) => {
-                                                            return (product.singleProduct.sku
-                                                                === data.results[0].data.sku)
-                                                        })
-
-                                                    if (productsAreInCartArr.includes(true)) {
+                                                    if (productIsInCartArray.includes(true)) {
                                                         dispatch({
-                                                            type: "UPDATE_PRODUCT",
+                                                            type: update,
                                                             payload: {
                                                                 singleProduct:
                                                                 data.results[0].data,
@@ -114,7 +131,7 @@ function ProductDetailComponent() {
                                                         });
                                                     } else {
                                                         dispatch({
-                                                            type: "ADD_TO_CART",
+                                                            type: add,
                                                             payload: {
                                                                 singleProduct:
                                                                 data.results[0].data,
@@ -125,7 +142,14 @@ function ProductDetailComponent() {
                                                     }
                                                 }}
                                             >
-                                                Add to cart
+                                                {
+                                                    inputsValue ===
+                                                    data.results[0].data.stock &&
+                                                    productIsInCartArray.includes(true)
+                                                        ? "Can't add more than available stock" :
+                                                        productIsInCartArray.includes(true) ?
+                                                            'Update cart' : 'Add to cart'
+                                                }
                                             </button>
                                         }
                                     </div>

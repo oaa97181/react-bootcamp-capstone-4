@@ -9,7 +9,7 @@
 }
 
 .col-25 {
-    flex: 25%;
+    flex: 30%;
 }
 
 .col-50 {
@@ -17,7 +17,7 @@
 }
 
 .col-75 {
-    flex: 75%;
+    flex: 70%;
 }
 
 .col-25,
@@ -41,7 +41,7 @@ input[type=text] {
     border-radius: 3px;
 }
 
-label {
+.label {
     margin-bottom: 10px;
     display: block;
 }
@@ -70,9 +70,20 @@ span.price {
     color: grey;
 }
 
+.order-container{
+    min-height: 33vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 @media (max-width: 800px) {
     .row {
-        flex-direction: column-reverse;
+        flex-direction: column;
+    }
+    .order-container {
+                margin-top: 20px;
+
     }
 
     .col-25 {

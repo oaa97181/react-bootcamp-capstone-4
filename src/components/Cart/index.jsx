@@ -3,6 +3,7 @@ import CartContext from "../../contexts/CartContext";
 import styles from "./styles.module.css";
 import {Link} from "react-router-dom";
 import RedirectComponent from "../ReusableComponents/RedirectComponent";
+import {clear, remove, update} from "../../contexts/actionTypes";
 
 
 function Cart() {
@@ -20,8 +21,11 @@ function Cart() {
         }));
 
     const handleInputsChange = (event, product) => {
+        if (event.target.value > product.stock) {
+            return alert('Not enough stock, please choose less units')
+        }
         return dispatch({
-            type: "UPDATE_PRODUCT",
+            type: update,
             payload: {
                 singleProduct:
                 product,
@@ -33,7 +37,7 @@ function Cart() {
 
     const removeItemFromCart = (event, product) => {
         return dispatch({
-            type: "REMOVE_FROM_CART",
+            type: remove,
             payload: {
                 singleProduct:
                 product,
@@ -44,7 +48,7 @@ function Cart() {
     const clearCart = () => {
         alert('Cart is cleared! :D');
         return dispatch({
-            type: "CLEAR_CART",
+            type: clear,
         });
     };
 
