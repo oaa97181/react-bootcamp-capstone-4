@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Navbar from "./index";
+import Navbar from "../components/ReusableComponents/Navbar";
 
 test('renders shop name/title in Navbar', async () => {
   render(<Navbar/>);
