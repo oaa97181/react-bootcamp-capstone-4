@@ -2,7 +2,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import ProductDetailComponent from "../components/ProductDetail";
 import React from "react";
-import CartContext from "../contexts/CartContext";
+import AppRouter from "../routers";
 
 test('Product Detail Page is ' +
     'fetching and rendering data from the API for a particular product.', async () => {
@@ -57,18 +57,11 @@ test('Product Detail Page contains a quantity selector and an “Add to Cart” 
 test('Validate that after clicking on the “Add to Cart” button,' +
     ' the number of items that are selected in quantity selector control are added to the cart.'
     , async () => {
-        window.history.pushState({}, 'Single product', '/product/YZZ_XhIAAC0AvmiA');
-
-        const state = {products: []};
-        const dispatch = jest.fn();
-        console.log(state)
+        window.history.pushState({}, 'Single product', '/product/YZZ6OhIAACgAvlE1');
 
         render(
-            <CartContext.Provider value={{state, dispatch}}>
-                <ProductDetailComponent/>
-            </CartContext.Provider>
+            <AppRouter/>
         );
-        console.log(state)
         await waitFor(() =>
             expect(screen.queryByText(/Loading.../)).toBeNull()
         );
