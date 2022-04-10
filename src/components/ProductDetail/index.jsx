@@ -73,10 +73,12 @@ function ProductDetailComponent() {
                             <div className={styles.productInfoContainer}>
 
                                 <div className={styles.productDescription}>
-                                    <span>{data.results[0].data.category.slug}</span>
-                                    <h1>{data.results[0].data.name}</h1>
-                                    <label>SKU: {data.results[0].data.sku}</label>
-                                    <div>
+                                    <span data-testid="CATEGORY">
+                                        {data.results[0].data.category.slug}
+                                    </span>
+                                    <h1 data-testid="NAME">{data.results[0].data.name}</h1>
+                                    <label data-testid="SKU">SKU: {data.results[0].data.sku}</label>
+                                    <div data-testid="TAGS">
                                         {data.results[0].tags.map((tag) => {
                                             return (
                                                 <label key={tag}>
@@ -86,7 +88,9 @@ function ProductDetailComponent() {
                                             )
                                         })}
                                     </div>
-                                    <p>{data.results[0].data.description[0].text}</p>
+                                    <p data-testid="DESCRIPTION">
+                                        {data.results[0].data.description[0].text}
+                                    </p>
                                     <ul>
                                         {data.results[0].data.specs.map((spec) => {
                                             return (
@@ -100,9 +104,10 @@ function ProductDetailComponent() {
 
 
                                 <div className={styles.productPrice}>
-                                    <span>${data.results[0].data.price}</span>
+                                    <span data-testid="PRICE">${data.results[0].data.price}</span>
                                     <div className='buttonContainer'>
                                         <input
+                                            data-testid="QUANTITY_INPUT"
                                             ref={productQuantityInput}
                                             type="number"
                                             className={styles.quantityInput}
@@ -114,9 +119,12 @@ function ProductDetailComponent() {
 
                                         {data.results[0].data.stock >= 1 &&
                                             <button
-                                                disabled={inputsValue ===
-                                                    data.results[0].data.stock &&
-                                                    productIsInCartArray.includes(true)}
+                                                data-testid="CART_BUTTON"
+                                                disabled={
+                                                    (inputsValue === data.results[0].data.stock
+                                                        && productIsInCartArray.includes(true))
+                                                    || inputsValue === 0
+                                                }
                                                 onClick={() => {
 
                                                     if (productIsInCartArray.includes(true)) {
@@ -142,7 +150,7 @@ function ProductDetailComponent() {
                                                     }
                                                 }}
                                             >
-                                                {
+                                                {inputsValue === 0 ? 'Disabled' :
                                                     inputsValue ===
                                                     data.results[0].data.stock &&
                                                     productIsInCartArray.includes(true)
