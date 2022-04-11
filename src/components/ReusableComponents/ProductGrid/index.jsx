@@ -105,6 +105,7 @@ function ProductGrid() {
                         Previous Page
                     </div>
                 }
+                Page: {currentPage}
                 {products.length % pageLimit === 0 &&
                     <div className={styles.paginationElement} onClick={() => {
                         handleClick(currentPage + 1)

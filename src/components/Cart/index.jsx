@@ -93,6 +93,7 @@ function Cart() {
                                 <div className={styles.counter}>
                                     <div className={styles.count}>
                                         <input
+                                            data-testid={"QUANTITY_INPUT"+product.singleProduct.sku}
                                             type="number"
                                             className={styles.quantityInput}
                                             min={1}
