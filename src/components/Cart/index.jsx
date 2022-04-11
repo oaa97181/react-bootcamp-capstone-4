@@ -88,12 +88,16 @@ function Cart() {
                                         alt={product.singleProduct.name}/>
                                 </div>
                                 <div className={styles.about}>
-                                    <h1 className={styles.title}>{product.singleProduct.name}</h1>
+                                    <h1 className={styles.productName}>
+                                        {product.singleProduct.name}
+                                    </h1>
                                 </div>
                                 <div className={styles.counter}>
                                     <div className={styles.count}>
                                         <input
-                                            data-testid={"QUANTITY_INPUT"+product.singleProduct.sku}
+                                            data-testid={
+                                                "QUANTITY_INPUT" + product.singleProduct.sku
+                                            }
                                             type="number"
                                             className={styles.quantityInput}
                                             min={1}
@@ -103,6 +107,8 @@ function Cart() {
                                                 handleInputsChange(event, product.singleProduct)
                                             }}
                                         />
+                                    </div>
+                                    <div className={styles.count}>
                                         x ${product.singleProduct.price}
                                     </div>
                                 </div>
